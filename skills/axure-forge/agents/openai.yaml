@@ -1,4 +1,4 @@
 interface:
   display_name: "AxureForge"
-  short_description: "通过独立二进制 CLI 创建、检索和编辑 Axure RP9 原型，无需安装 Python"
+  short_description: "用自然语言创建、查找和修改 Axure RP9 原型"
   default_prompt: "使用 $axure-forge 检查本机 RP9，并按我的要求创建或编辑原型。"

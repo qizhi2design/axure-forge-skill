@@ -1,34 +1,28 @@
-# Validation — 2026-11-02
+# 实测记录（2026-11-02）
 
-- Skill metadata: official skill-creator quick_validate passed (PyYAML is a developer-only validation dependency).
-- Discovery: `npx skills add . --list` found `axure-forge` under `skills/axure-forge/`.
-- Shell environment tests: RP9 actual application metadata recognized as 9.0.0.3746; renamed app fixture accepted; missing app, wrong version and missing executable rejected.
-- File gate: RP9 header accepted; RP11, truncated and invalid signatures rejected. A header-only fake file is separately rejected by full CLI parsing.
-- Installation: real local Mach-O binary installed to temporary directory and reused; checksum mismatch and incomplete offline arguments rejected while old binary bytes stayed unchanged.
-- Simulated Release download: archive, SHA256SUMS, native architecture/version, and temporary creation/reopen checks passed with a whitelist PATH containing no Python, pip, uv, Node, npm or Git. Unexpected archive members and unsupported OS rejected.
-- Business smoke: 19 real binary commands passed: project/page creation, search, panel state event, repeater data replacement, batch editing, reopen, output protection, batch failure without output, and HTML import.
-- Native designer: generated `多页项目.rp` opened in installed RP9 without an error dialog; screenshot inspection confirmed `Page 1` and `新增页面` in the page list. This verifies opening and page structure only. Interactive preview behavior was not tested.
-- Upstream release PR: macOS ARM64, Ubuntu x64 and Windows x64 binary CI passed at commit f6b3870. Windows required explicit resource packaging and UTF-8 resource/protocol handling.
+这份记录说明：哪些事情真的跑过，结果如何，哪些还没有验证。
 
-Distribution correction: the source repository is private; the consumer source is
-the existing public `qizhi2design/axureforge-cli` repository. Version 0.2.1 was
-built and verified natively in CI run 41407286717, then published there with the
-existing versioned directory/archive convention and third-party licenses. The
-installer defaults to anonymous curl downloads and minimum CLI 0.2.1.
+## 检查结果
 
-Reproduce using `bash tests/run.sh BINARY` and `bash tests/install-download.sh BINARY`. Consumers do not need the developer test tools.
+| 检查项 | 结果 |
+| --- | --- |
+| 识别本机 Axure RP9 | 读到版本 9.0.0.3746，识别正确。 |
+| Axure 应用改名后 | 仍能识别，不靠文件夹名字判断。 |
+| 环境不满足时 | 版本不符、缺少应用或缺少程序文件，直接拒绝并说明原因。 |
+| RP9 文件 | 通过。 |
+| RP11 文件 | 拒绝，不转换也不修改。 |
+| 损坏或伪造的文件 | 拒绝。只看文件开头的标记不够，会完整读一遍再判断。 |
+| 真实安装 | 安装成功，装完会启动一次确认能用。再次使用时复用已装版本，不重复安装。 |
+| 下载完整性 | 校验文件与实际下载对不上时拒绝安装，原有文件保持不变。下载包里有意外文件、或系统不匹配时，也拒绝。 |
+| 干净环境 | 在一台没有任何开发工具的干净系统上，模拟下载并安装成功。 |
+| 真实操作 | 19 条真实命令全部通过，见下。 |
+| 在 Axure 里打开 | 生成的 `.rp` 在真实 Axure RP9 中打开，没有报错，页面列表正确。 |
 
-Final 0.2.1 distribution checks:
-- Anonymous curl download from public GitHub Release, SHA256SUMS verification,
-  startup/capability checks and global installation passed. `axure-forge --version`
-  returned 0.2.1 from ~/.local/bin.
-- Versioned public archive layout tests passed with no external runtime in PATH;
-  checksum mismatch, unexpected archive members and platform rejection passed.
-- Doctor now reads the root CLI help once instead of starting one process per
-  domain; metadata validation passed again.
-- Final observed installed-binary version startup was 27.10 seconds on this host;
-  prior candidate startup was 57.82 seconds. No cross-platform startup claim.
-- Final public 0.2.1 business smoke completed: all 19 CLI commands passed,
-  including HTML import, panel event round-trip, repeater data and failed-batch
-  output protection. Native designer inspection above used the prior 0.2.0
-  development candidate; the public 0.2.1 smoke was structural only.
+19 条真实命令覆盖：建项目、加页面、搜索元件、面板状态、中继器数据替换、批量修改、重新打开、拒绝覆盖已有文件、批量失败不产出文件、网页导入。
+
+## 说明
+
+- 在 Axure 里打开这一步，只说明文件能打开、页面列表对。交互效果没有在预览里逐项验证。
+- 打开验证用的是当时的开发版本。正式发布的 0.2.1 只做了文件结构层面的实测，还没有重复这一步。
+- 本机第一次启动约 27 秒。这是单台机器的观测，换机型没有验证。
+- 以上检查均由维护者在 Apple 芯片 Mac 上实测完成。

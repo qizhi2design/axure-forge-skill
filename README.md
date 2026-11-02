@@ -1,71 +1,72 @@
 # AxureForge Skill
 
-通过独立二进制 CLI 分析、创建和编辑 Axure RP9。使用端无需 Python、pip、uv 或源码构建；第一版支持 macOS ARM64，必须安装 Axure RP9。
+> 用日常语言，让 AI 助手帮你分析、创建和修改 Axure RP9 原型。
 
-## 安装 skill
+## 能做什么
 
-本仓库为独立的公开 GitHub skill 仓库，标准目录可被 `skills` CLI 发现：
+- 看清楚一个老原型的页面结构，不用一页页点开。
+- 查清某个按钮或面板上挂了什么交互。
+- 把现成的网页读成可以继续编辑的原型。
+- 批量改文案，比如把页面里的「提交」统一改成「确认提交」。
+- 从零建一个项目，加上页面和按钮，先有个能讲的骨架。
+- 给按钮配交互，比如点一下，面板切换到另一个状态。
+
+## 使用前准备
+
+- 一台 Apple 芯片的 Mac（M 系列芯片）。
+- 电脑上已经装好 Axure RP9。
+- 不需要另外安装运行环境，AxureForge 装好就能用。
+
+## 安装
+
+第一条命令只是看看这个仓库里有什么：
 
 ```bash
 npx skills add qizhi2design/axure-forge-skill --list
+```
+
+第二条命令把 AxureForge 装到你的 AI 助手里：
+
+```bash
 npx skills add qizhi2design/axure-forge-skill --skill axure-forge --agent codex --global
 ```
 
-本地安装：在本仓库执行 `npx skills add . --skill axure-forge --agent codex --global`。安装器会处理 scripts 和 references；不要只复制 SKILL.md。npx 需要 Node/npm，CLI 本身不依赖 Node。
+安装会用到 `npx` 命令。如果提示找不到这个命令，先装一次 npm（npm 官网有安装包）再回来。
+所需的程序从公开下载页获取（[axureforge-cli](https://github.com/qizhi2design/axureforge-cli)），不需要登录。
 
-## 使用
+装好以后，在 AI 助手里用 `$axure-forge` 就能唤起它。
 
-```text
-$axure-forge 检查 RP9 环境并安装二进制 CLI
-$axure-forge 分析 ./demo.rp 的页面和交互
-$axure-forge 将 ./site 转换为 ./demo.rp
-$axure-forge 将 ./demo.rp 中“提交”改为“确认提交”，另存为 ./edited.rp
-$axure-forge 创建两个状态的面板，并为按钮添加切换交互
-```
+## 怎么用
 
-首次运行检查 RP9，再检查/安装 CLI。兼容的现有版本直接复用。输入 RP11 只报告版本，不自动转换或编辑。修改后重新打开核对；设计器预览需单独验证。
+直接用中文说需求就行，不用记命令。
 
-## 参数
-
-Skill 接受自然语言，没有自定义的 `$skill --flag` 解析器。以下任务字段映射到真实脚本或 CLI 参数：
-
-| 字段 | 用途 |
+| 你说的话 | 它会做什么 |
 | --- | --- |
-| action | doctor / install / analyze / create / import-html / edit / batch，由自然语言选择 |
-| project / output | 输入/输出 RP 路径；修改默认另存 |
-| input | HTML 文件或含 index.html 的目录 |
-| query | 搜索文字、名称，可结合类型和页面 |
-| operations | schema_version=2 的批量 JSON 文件 |
-| axure-path | RP9 应用路径，默认 /Applications/Axure RP 9.app |
-| version | 安装版本，默认 v0.2.1，最低 0.2.1 |
-| binary-path / checksum-path | 本地二进制与 SHA256SUMS，必须一起提供 |
-| bin-dir | 全局命令安装目录，默认 ~/.local/bin |
-| download-method | 默认 curl 匿名下载；可选 gh / auto |
-| force | 明确替换已有安装或覆盖业务输出，两者属于不同命令 |
+| `$axure-forge 检查 RP9 环境` | 确认本机的 Axure RP9 能不能配合工作，缺什么会直接说。 |
+| `$axure-forge 分析 ./demo.rp 的页面和交互` | 列出有哪些页面、页面上有什么元件、挂了什么交互。 |
+| `$axure-forge 将 ./site 转换为 ./demo.rp` | 把网页文件夹读成可编辑的原型，另存为新文件。 |
+| `$axure-forge 将 ./demo.rp 中「提交」改为「确认提交」，另存为 ./edited.rp` | 找到文字所在位置，改完另存，原文件不动。 |
+| `$axure-forge 创建两个状态的面板，并为按钮添加切换交互` | 新建两状态面板，把按钮接上「点击切换状态」。 |
 
-```bash
-bash skills/axure-forge/scripts/doctor.sh --help
-bash skills/axure-forge/scripts/install.sh --help
-bash skills/axure-forge/scripts/inspect-rp.sh --help
-```
+第一次使用会先检查 RP9，再准备需要的程序。已经装过且版本合适的会直接复用。
 
-二进制来源：公开仓库 <https://github.com/qizhi2design/axureforge-cli> 的版本 Release，不需要 GitHub 登录。下载资产约定为 `axure-forge-0.2.1-macos-arm64.tar.gz` 和 `SHA256SUMS`，包内保留第三方许可证。可使用已有本地产物离线安装：
+## 可选设置
 
-```bash
-bash skills/axure-forge/scripts/install.sh \
-  --binary-path /absolute/path/axure-forge \
-  --checksum-path /absolute/path/SHA256SUMS
-export PATH="$HOME/.local/bin:$PATH"
-axure-forge --version
-```
+- Axure 没装在默认位置（默认是「应用程序」文件夹里的 Axure RP 9）：直接告诉它你的安装路径。
+- 想装到别的位置：默认装在 `~/.local/bin`，也可以指定别的目录。
+- 升级或覆盖：想换新版本时明确说明；不说明时继续用已经装好的。
+- 离线安装：手上有安装包和校验文件（用来确认下载完整）时，可以从本地装。
 
-## 目录与验证
+更多安装选项见 skill 内的安装说明。
 
-`skills/axure-forge/` 是实际分发目录；`references/` 按任务加载，`scripts/` 只使用 Shell 与 macOS 系统工具。tests 不进入 skill 上下文。
+## 使用提醒
 
-```bash
-bash tests/run.sh /absolute/path/axure-forge
-```
+- Axure RP11 的文件只能查看。不会自动转成 RP9，也不会被修改。
+- 修改默认另存为新文件，不会覆盖你的原文件。要覆盖必须你明确要求。
+- 自动检查只验证文件结构和属性。交互效果请在 Axure 里实际预览确认。
+- 网页转原型不是 100% 还原。浏览器里的脚本和复杂排版可能对不上，转完要自己过一遍。
 
+## 许可证
 
-MIT License。CLI 上游单独采用 MIT License，二进制不提交到本仓库。
+AxureForge Skill 采用 MIT 许可证，全文见 [LICENSE](LICENSE)。
+随包提供的 AxureForge 程序也采用 MIT 许可证。

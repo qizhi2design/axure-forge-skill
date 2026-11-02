@@ -1,32 +1,33 @@
 ---
 name: axure-forge
-description: 使用 AxureForge 独立二进制 CLI 分析、创建和编辑 Axure RP9 原型，支持 HTML 转 RP、元件定位、交互和批量操作；也用于 RP9 环境检查及 CLI 安装。适用于 macOS ARM64，必须安装本机 Axure RP9。
+description: 用 AxureForge 分析、创建和编辑 Axure RP9 原型，支持 HTML 转 RP、定位和修改元件、设置交互、批量操作；也用于检查 RP9 环境和安装 AxureForge。适用于 Apple 芯片的 Mac，需要在本机安装 Axure RP9。
 ---
 
 # AxureForge
 
-通过 `axure-forge` 命令操作 RP9，不读取底层序列化源码完成普通业务任务。以下相对路径均以本 skill 目录为基准；执行时使用实际绝对路径。
+用 `axure-forge` 命令操作 RP9。不需要了解文件内部结构，用命令就能完成日常工作。
+以下相对路径都以本 skill 目录为基准；实际执行时换成绝对路径。
 
 ## 启动
 
-1. 运行 `bash scripts/doctor.sh`；非标准 RP9 路径加 `--axure-path APP`。未检测到 RP9 则停止，说明原因。检测依赖应用元数据及可执行文件，不能以目录名代替版本检查。
-2. 缺少或不兼容 CLI 时读取 [安装说明](references/installation.md)，运行二进制安装器。已有兼容版本直接复用。不要安装 Python、pip、uv 或克隆源码构建；不要自行升级兼容版本。
-3. 有输入文件时运行 `bash scripts/inspect-rp.sh --project FILE`，再用 `axure-forge project open --path FILE` 完整解析。头部识别不代表文件有效。非 RP9 不进行编辑或自动转换。
+1. 运行 `bash scripts/doctor.sh`。RP9 装在非默认位置时加 `--axure-path APP`。没检测到 RP9 就停下来，向用户说明原因。判断版本要看应用本身的信息，不能只看文件夹名字。
+2. AxureForge 缺失或版本不匹配时，读[安装说明](references/installation.md)后运行安装器。已有可用版本直接复用，不要自行升级，也不要自己下载源码编译。
+3. 有输入文件时，先运行 `bash scripts/inspect-rp.sh --project FILE`，再用 `axure-forge project open --path FILE` 完整打开。只看文件头还不能确认文件完好，要继续打开一次。不是 RP9 的文件不编辑，也不自动转换。
 
 ## 按任务加载
 
-只读当前任务需要的文档，不一次性载入全部参考资料。
+只读当前任务需要的文档，不用一次全部读完。
 
-- 创建项目、页面、HTML 导入：[项目与 HTML](references/project-and-html.md)。
-- 分析项目、定位和修改元件、模板：[检索与编辑](references/search-and-edit.md)。
-- 事件、面板、中继器：[交互](references/interactions.md)。
-- 多步修改、批量执行和验收：[批量与验证](references/batch-and-verify.md)。
+- 创建项目、页面、导入 HTML：[项目与 HTML](references/project-and-html.md)。
+- 分析项目、定位和修改元件、使用模板：[检索与编辑](references/search-and-edit.md)。
+- 事件、动态面板、中继器：[交互](references/interactions.md)。
+- 多步修改、批量执行和结果核对：[批量与验证](references/batch-and-verify.md)。
 
 ## 执行约束
 
-- CLI 输出为 JSON；读取 `result`，不要把它当根对象。`schema_version` 为 2。
-- 使用返回的 `scope_id`、`node_id` 等真实 ID，不猜测。优先 `search explore --limit 5`，需要时再读取具体对象；不要先倾倒所有页面节点。
-- 单次 CLI 调用是新会话。下一条命令必须打开上一步输出文件；多个编辑可写批量 JSON，业务参数遵循实际子命令 `--help`。
-- 默认另存输出，覆盖需用户明确要求并传 `--force`。批量错误立即停止，CLI 失败时不写出输出；不要将部分成功描述为完整成功。
-- 写出后重新打开验证，并复查目标属性。结构验证与 Axure 设计器打开、预览交互是不同证据，没有实机验证时明确说明。
-- 汇报输出路径、实际变更和验证范围；遇到不支持的原生能力说明限制，不保证任意 HTML 无损转换。
+- 命令输出是 JSON。内容在 `result` 里，`result` 不是最外层。`schema_version` 为 2。
+- 用返回的真实 ID（`scope_id`、`node_id` 等），不要猜。先用 `search explore --limit 5` 定位，需要时再读具体对象，不要一上来就列出所有页面节点。
+- 每执行一条命令都是独立一次。下一条命令要带上一步的输出文件；多处修改可以写成批量 JSON，参数以实际子命令的 `--help` 为准。
+- 输出默认另存新文件。要覆盖已有文件，必须用户明确要求并传 `--force`。批量执行出错立即停止，失败时不会写出文件；部分成功不要当成完整成功汇报。
+- 写完重新打开一次，再核对目标属性。检查文件结构、在 Axure 设计器里打开、预览交互是三件不同的事；没做实机验证就明确说明。
+- 汇报输出路径、实际改了哪些内容、验证到哪一步。遇到工具不支持的功能，要说清限制；不承诺任意 HTML 都能无损转换。
