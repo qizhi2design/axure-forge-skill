@@ -11,7 +11,6 @@
 </p>
 
 <p align="center">
-  <img alt="平台：Apple 芯片 Mac" src="https://img.shields.io/badge/platform-Apple%20Silicon-000000?logo=apple&logoColor=white">
   <img alt="适用于 Axure RP9/RP11" src="https://img.shields.io/badge/Axure-RP9%20%2F%20RP11-0A7AFF">
   <img alt="可与 Claude / Codex 配合" src="https://img.shields.io/badge/works%20with-Claude%20%7C%20Codex-7C3AED">
   <img alt="许可证 MIT" src="https://img.shields.io/badge/license-MIT-22C55E">
@@ -54,7 +53,6 @@
 
 ## 使用前准备
 
-- 一台 Apple 芯片的 Mac（M 系列芯片）。目前没有 Windows 版和 Intel 版。
 - 安装和生成都不要求已安装 Axure 编辑器。
 - 只有做原生视觉验收时，才需要打开对应版本的 RP9/RP11 编辑器。
 - 不需要另外装运行环境，装好就能用。
@@ -199,9 +197,16 @@ CLI 的自更新入口还没随发布版提供，所以升级走安装脚本：�
 </details>
 
 <details>
+<summary><b>能处理 Axure RP9 的文件吗？</b></summary>
+
+能。读取、编辑和保存 RP9；已有文件默认保持源格式，不会顺手换成 RP11。
+
+</details>
+
+<details>
 <summary><b>能处理 Axure RP11 的文件吗？</b></summary>
 
-可以读取、编辑和保存 RP11，也支持预检后严格转换；已有文件默认保持源格式。
+能。读取、编辑和保存 RP11；要换版本时会先预检，再严格转换另存。
 
 </details>
 
@@ -221,30 +226,14 @@ CLI 的自更新入口还没随发布版提供，所以升级走安装脚本：�
 
 </details>
 
-<details>
-<summary><b>支持 Windows 或 Intel 芯片的 Mac 吗？</b></summary>
-
-目前只支持 Apple 芯片的 Mac（M 系列芯片）。
-
-</details>
-
 ## 使用提醒
 
-- RP9 和 RP11 都能读取、编辑和保存；已有文件默认保持源格式，转换要先预检再严格转换。
+- RP9 文件可以读取、编辑和保存。
+- RP11 文件可以读取、编辑和保存。
+- 已有文件默认保持源格式；要换版本必须先预检再严格转换，不做隐式转换。
 - 修改默认另存为新文件，不会覆盖你的原文件。要覆盖必须你明确要求。
 - 自动检查只验证文件结构和属性。交互效果请在 Axure 里实际预览确认。
 - 网页转原型不是 100% 还原。浏览器里的脚本和复杂排版可能对不上，转完要自己过一遍。
-
-## 仓库里有什么
-
-<details>
-<summary><b>展开看目录结构</b></summary>
-
-- `skills/axure-forge/` —— 分发给 AI 助手的目录，安装时用的就是这里。
-- `docs/images/` —— 顶部那张横幅图。
-- `tests/` —— 维护者自测用的检查脚本，普通使用者用不到。
-
-</details>
 
 ## 许可证
 
