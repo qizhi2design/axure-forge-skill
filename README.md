@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/images/banner.png" alt="AxureForge Skill —— 说一句话，改一个原型" width="100%">
+  <img src="docs/images/banner.jpg" alt="AxureForge Skill —— 说一句话，改一个原型" width="100%">
 </p>
 
 <h1 align="center">AxureForge Skill</h1>
@@ -26,7 +26,6 @@
 
 <p align="center">
   <a href="#能做什么">能做什么</a> ·
-  <a href="#效果">效果</a> ·
   <a href="#它是怎么工作的">它是怎么工作的</a> ·
   <a href="#安装">安装</a> ·
   <a href="#怎么用">怎么用</a> ·
@@ -42,51 +41,9 @@
 - 🧱 从零建一个项目，加上页面和按钮，先有个能讲的骨架。
 - 👆 给按钮配交互，比如点一下，面板切换到另一个状态。
 
-## 效果
-
-### 30 秒看完
-
-<img src="docs/images/demo.gif" alt="用中文提需求，AI 助手完成原型修改的完整演示" width="100%">
-
-*从提需求到改完回读验证，全过程不用手写命令。*
-
-### 五个典型场景
-
-#### 一、看懂一个老原型
-
-<img src="docs/images/scene-analyze.png" alt="左侧 Axure 页面，右侧 AI 整理的页面、元件与交互清单" width="100%">
-
-*「这个原型有几个页面、每页放了什么、按钮上挂的是什么交互？」*
-
-#### 二、从零搭一个页面
-
-<img src="docs/images/scene-create.png" alt="一句话生成页面与按钮，并在 Axure 中打开" width="100%">
-
-*先给一个能讲的骨架，再往里填内容。*
-
-#### 三、把网页转成原型
-
-<img src="docs/images/scene-html.png" alt="左侧浏览器中的网页，右侧转换后可继续编辑的原型" width="100%">
-
-*现成的网页读成可编辑原型，转化范围以实际支持能力为准。*
-
-#### 四、批量改文案
-
-<img src="docs/images/scene-batch.png" alt="批量修改前后对比：提交改为确认提交" width="100%">
-
-*「把页面里的『提交』统一改成『确认提交』」，改完另存。*
-
-#### 五、配一个交互
-
-<img src="docs/images/scene-interaction.png" alt="点击按钮后面板切换到详情状态" width="100%">
-
-*点一下，面板切到另一个状态。*
-
 ## 它是怎么工作的
 
-<img src="docs/images/flow.png" alt="流程图：你提需求，AI 读技能说明，生成或修改原型文件，你在 Axure 里验收" width="100%">
-
-*四步，中间的事它来做。*
+整个过程分四步，中间的事它来做。
 
 1. **你提需求** —— 用中文说一句就行。
 2. **AI 读技能说明** —— 知道该按什么步骤做。
@@ -198,7 +155,7 @@ npx skills add qizhi2design/axure-forge-skill --skill axure-forge --agent codex 
 <summary><b>展开看目录结构</b></summary>
 
 - `skills/axure-forge/` —— 分发给 AI 助手的目录，安装时用的就是这里。
-- `docs/images/` —— 上面那些展示图。
+- `docs/images/` —— 顶部那张横幅图。
 - `tests/` —— 维护者自测用的检查脚本，普通使用者用不到。
 
 </details>
