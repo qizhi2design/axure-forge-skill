@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "purpose": "AI-readable starting points, not confirmed user requirements",
+  "templates": [
+    {
+      "id": "desktop-dashboard",
+      "file": "desktop-dashboard.html",
+      "label": "桌面看板",
+      "suggested_page_size": "1440x900",
+      "page_mode": "auto",
+      "sections": [
+        "侧栏",
+        "关键指标",
+        "任务列表",
+        "来源分布"
+      ]
+    },
+    {
+      "id": "desktop-list-form",
+      "file": "desktop-list-form.html",
+      "label": "桌面列表与表单",
+      "suggested_page_size": "1440x900",
+      "page_mode": "auto",
+      "sections": [
+        "筛选",
+        "数据表格",
+        "编辑表单"
+      ]
+    },
+    {
+      "id": "mobile-detail",
+      "file": "mobile-detail.html",
+      "label": "移动端详情",
+      "suggested_page_size": "390x844",
+      "page_mode": "auto",
+      "sections": [
+        "页头",
+        "详情卡片",
+        "跟进记录",
+        "底部操作"
+      ]
+    }
+  ]
+}

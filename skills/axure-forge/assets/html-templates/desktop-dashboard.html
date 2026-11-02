@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><title>桌面看板 · 建议宽 1440、首屏高 900、纵向延展</title>
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial; font-size: 14px; line-height: 1.4; color: #203046; background: #edf1f6; }
+h1, h2, h3, p { margin: 0; }
+h1 { font-size: 28px; line-height: 1.4; }
+h2 { font-size: 18px; line-height: 1.4; }
+h3 { font-size: 15px; line-height: 1.4; }
+.muted { color: #65758a; }
+button { height: 40px; padding: 0 18px; border: 1px solid #2157a6; background: #2157a6; color: #ffffff; font-size: 14px; }
+input, select, textarea { border: 1px solid #c5cfdd; background: #ffffff; color: #203046; font-size: 14px; padding: 10px; }
+input, select { height: 40px; }
+.card { background: #ffffff; border: 1px solid #d7dfeb; border-radius: 6px; padding: 20px; }
+.frame { width: 1440px; min-height: 900px; display: flex; align-items: stretch; }
+.sidebar { width: 220px; flex-shrink: 0; padding: 28px 20px; background: #18324f; color: #ffffff; }
+.brand { font-size: 20px; font-weight: 700; margin-bottom: 36px; }
+.nav-item { padding: 12px; margin-bottom: 8px; }
+.nav-active { background: #2d5076; }
+.main { flex-grow: 1; flex-basis: 0; min-width: 0; padding: 32px; }
+.page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; }
+.subtitle { margin-top: 8px; color: #65758a; }
+.row { display: flex; gap: 20px; align-items: flex-start; }
+.flex { flex-grow: 1; flex-basis: 0; min-width: 0; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { padding: 14px 12px; border: 1px solid #d7dfeb; text-align: left; }
+th { background: #edf3fa; font-weight: 600; }
+.stats { display: flex; gap: 16px; margin-bottom: 24px; }
+.stat { flex-grow: 1; flex-basis: 0; min-width: 0; }
+.number { font-size: 32px; font-weight: 700; margin-top: 12px; }
+.note { margin-top: 8px; color: #65758a; font-size: 12px; }
+.section-title { margin-bottom: 20px; }
+.channel { display: flex; gap: 12px; align-items: center; margin-bottom: 18px; }
+.channel-name { width: 80px; flex-shrink: 0; }
+.track { width: 180px; height: 12px; background: #edf1f6; }
+.bar { height: 12px; background: #3e75b8; }
+</style></head>
+<body>
+<!-- 桌面看板 · 建议宽 1440、首屏高 900、纵向延展；尺寸为参考建议，使用前按确认结果修改。无 JavaScript，交互需在 RP 中另配。 -->
+<div class="frame"><aside class="sidebar" data-forge-name="侧栏导航"><p class="brand">线索工作台</p><div class="nav-item nav-active">工作概览</div><div class="nav-item">线索管理</div><div class="nav-item">跟进记录</div><div class="nav-item">团队设置</div></aside><main class="main" data-forge-name="看板主内容">
+<header class="page-header"><div><h1>工作概览</h1><p class="subtitle">查看本周线索分配与跟进进度</p></div><button data-axure-id="create-lead">新建线索</button></header>
+<section class="stats" data-forge-name="关键指标">
+<article class="card stat"><p class="muted">新增线索</p><p class="number">128</p><p class="note">本周新增，较上周增加 16 条</p></article>
+<article class="card stat"><p class="muted">待分配</p><p class="number">24</p><p class="note">需分配给团队成员</p></article>
+<article class="card stat"><p class="muted">待跟进</p><p class="number">56</p><p class="note">其中 8 条即将超时</p></article>
+<article class="card stat"><p class="muted">已完成</p><p class="number">48</p><p class="note">已完成本周跟进</p></article></section>
+<section class="row"><article class="card flex" data-forge-name="跟进任务"><h2 class="section-title">需要跟进的线索</h2>
+<table><thead><tr><th>线索</th><th>负责人</th><th>状态</th></tr></thead><tbody>
+<tr><td>样例线索 A</td><td>销售一组</td><td>今日联系</td></tr><tr><td>样例线索 B</td><td>销售二组</td><td>等待回复</td></tr><tr><td>样例线索 C</td><td>销售一组</td><td>待预约</td></tr></tbody></table></article>
+<article class="card" style="width:360px;flex-shrink:0" data-forge-name="来源分布"><h2 class="section-title">线索来源</h2>
+<div class="channel"><span class="channel-name">在线咨询</span><div class="track"><div class="bar" style="width:80%"></div></div><span>64</span></div>
+<div class="channel"><span class="channel-name">活动登记</span><div class="track"><div class="bar" style="width:50%"></div></div><span>40</span></div>
+<div class="channel"><span class="channel-name">客户转介</span><div class="track"><div class="bar" style="width:30%"></div></div><span>24</span></div>
+<p class="muted">示例数据，用于说明统计与列表的布局关系。</p></article></section>
+</main></div>
+</body></html>

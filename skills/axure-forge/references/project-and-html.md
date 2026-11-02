@@ -1,10 +1,12 @@
 # HTML 和项目
 
+创作前先按 SKILL.md 约定页面范围和画布规格。下方 `1440x900` 是命令示例，应替换为已确认的尺寸；技术默认值不代表用户选择。需要 HTML 起点时见 [HTML 模板](html-templates.md)。
+
 ```bash
 axure-forge html import ./site --page-size 1440x900 --output dashboard@v1.rp --verify --work-dir .forge
 ```
 
-默认宽度固定，高度至少 900px 并随内容延展；`--page-mode fixed` 固定宽高，越界列入报告。旧 `--viewport '[1440,900]'` 保留，冲突参数报错。
+`auto` 模式宽度固定，高度以传入值为下限并随内容延展；`--page-mode fixed` 固定宽高，越界列入报告。旧 `--viewport '[1440,900]'` 保留，冲突参数报错。
 
 命令一次完成计划、导入、重新解析和验证。先读取 `.forge/summary.json`：包含 RP、plan、index、report 路径、节点数和验收范围。完整数据留在磁盘，异常时才读详情。
 

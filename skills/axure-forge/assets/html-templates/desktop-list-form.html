@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><title>桌面列表与表单 · 建议宽 1440、首屏高 900、纵向延展</title>
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial; font-size: 14px; line-height: 1.4; color: #203046; background: #edf1f6; }
+h1, h2, h3, p { margin: 0; }
+h1 { font-size: 28px; line-height: 1.4; }
+h2 { font-size: 18px; line-height: 1.4; }
+h3 { font-size: 15px; line-height: 1.4; }
+.muted { color: #65758a; }
+button { height: 40px; padding: 0 18px; border: 1px solid #2157a6; background: #2157a6; color: #ffffff; font-size: 14px; }
+input, select, textarea { border: 1px solid #c5cfdd; background: #ffffff; color: #203046; font-size: 14px; padding: 10px; }
+input, select { height: 40px; }
+.card { background: #ffffff; border: 1px solid #d7dfeb; border-radius: 6px; padding: 20px; }
+.frame { width: 1440px; min-height: 900px; display: flex; align-items: stretch; }
+.sidebar { width: 220px; flex-shrink: 0; padding: 28px 20px; background: #18324f; color: #ffffff; }
+.brand { font-size: 20px; font-weight: 700; margin-bottom: 36px; }
+.nav-item { padding: 12px; margin-bottom: 8px; }
+.nav-active { background: #2d5076; }
+.main { flex-grow: 1; flex-basis: 0; min-width: 0; padding: 32px; }
+.page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; }
+.subtitle { margin-top: 8px; color: #65758a; }
+.row { display: flex; gap: 20px; align-items: flex-start; }
+.flex { flex-grow: 1; flex-basis: 0; min-width: 0; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { padding: 14px 12px; border: 1px solid #d7dfeb; text-align: left; }
+th { background: #edf3fa; font-weight: 600; }
+.filters { display: flex; gap: 12px; align-items: center; margin-bottom: 20px; }
+.filters input { width: 240px; }
+.filters select { width: 160px; }
+.form-panel { width: 320px; flex-shrink: 0; }
+.field { margin-top: 20px; }
+.field label { display: block; margin-bottom: 8px; }
+.field input, .field select, .field textarea { width: 100%; }
+.field textarea { height: 96px; }
+.form-actions { display: flex; gap: 12px; margin-top: 24px; }
+.secondary { background: #ffffff; color: #2157a6; }
+.pagination { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; }
+</style></head>
+<body>
+<!-- 桌面列表与表单 · 建议宽 1440、首屏高 900、纵向延展；尺寸为参考建议，使用前按确认结果修改。无 JavaScript，交互需在 RP 中另配。 -->
+<div class="frame"><aside class="sidebar" data-forge-name="侧栏导航"><p class="brand">线索工作台</p><div class="nav-item">工作概览</div><div class="nav-item nav-active">线索管理</div><div class="nav-item">跟进记录</div><div class="nav-item">团队设置</div></aside><main class="main" data-forge-name="列表与表单主内容">
+<header class="page-header"><div><h1>线索管理</h1><p class="subtitle">筛选线索，查看状态并补充跟进信息</p></div></header>
+<div class="row"><section class="card flex" data-forge-name="线索列表"><div class="filters"><input type="text" placeholder="搜索线索名称" data-axure-id="lead-search"><select><option>全部状态</option><option>待跟进</option><option>已完成</option></select><button>查询</button></div>
+<table><thead><tr><th>线索名称</th><th>来源</th><th>状态</th></tr></thead><tbody>
+<tr><td>样例线索 A</td><td>在线咨询</td><td>待跟进</td></tr><tr><td>样例线索 B</td><td>活动登记</td><td>等待回复</td></tr><tr><td>样例线索 C</td><td>客户转介</td><td>已完成</td></tr><tr><td>样例线索 D</td><td>在线咨询</td><td>待分配</td></tr></tbody></table>
+<div class="pagination"><span class="muted">共 4 条示例记录</span><button class="secondary">下一页</button></div></section>
+<section class="card form-panel" data-forge-name="编辑线索"><h2>编辑线索</h2><p class="subtitle">补充负责人和跟进安排</p>
+<div class="field"><label for="lead-name">线索名称</label><input id="lead-name" type="text" value="样例线索 A" data-axure-id="lead-name"></div>
+<div class="field"><label for="owner">负责人</label><select id="owner"><option>销售一组</option><option>销售二组</option></select></div>
+<div class="field"><label for="memo">跟进备注</label><textarea id="memo" placeholder="填写下一步跟进安排"></textarea></div>
+<div class="form-actions"><button data-axure-id="save-lead">保存线索</button><button class="secondary">取消</button></div></section></div>
+</main></div>
+</body></html>
