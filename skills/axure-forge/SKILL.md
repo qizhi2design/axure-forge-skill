@@ -8,26 +8,29 @@ description: 用 AxureForge 分析、创建和编辑 Axure RP9 原型，支持 H
 用 `axure-forge` 命令操作 RP9。不需要了解文件内部结构，用命令就能完成日常工作。
 以下相对路径都以本 skill 目录为基准；实际执行时换成绝对路径。
 
-## 启动
+## 启动与数据复用
 
-1. 运行 `bash scripts/doctor.sh`。RP9 装在非默认位置时加 `--axure-path APP`。没检测到 RP9 就停下来，向用户说明原因。判断版本要看应用本身的信息，不能只看文件夹名字。
-2. AxureForge 缺失或版本不匹配时，读[安装说明](references/installation.md)后运行安装器。已有可用版本直接复用，不要自行升级，也不要自己下载源码编译。
-3. 有输入文件时，先运行 `bash scripts/inspect-rp.sh --project FILE`，再用 `axure-forge project open --path FILE` 完整打开。只看文件头还不能确认文件完好，要继续打开一次。不是 RP9 的文件不编辑，也不自动转换。
+- 同一任务运行一次 `bash scripts/doctor.sh`；环境或二进制变化后才重查。非标准路径加 `--axure-path APP`。
+- 缺少兼容 CLI 时读 [安装说明](references/installation.md)，安装发布的目录包；不要安装 Python 或克隆源码构建。
+- 有 RP 输入时直接 `dump --project FILE` 完整解析并生成索引，替代“检查文件头 → project open → page list → page get”的多次往返。非 RP9 不编辑。
+- 默认工作目录是当前目录的 `.forge/`，可传 `--work-dir DIR`。先读 `summary.json`；只针对异常读取 report 或索引，不把完整节点数据载入对话。
 
 ## 按任务加载
 
-只读当前任务需要的文档，不用一次全部读完。
+当前任务相关参考说明只需读一次：
 
-- 创建项目、页面、导入 HTML：[项目与 HTML](references/project-and-html.md)。
-- 分析项目、定位和修改元件、使用模板：[检索与编辑](references/search-and-edit.md)。
-- 事件、动态面板、中继器：[交互](references/interactions.md)。
-- 多步修改、批量执行和结果核对：[批量与验证](references/batch-and-verify.md)。
+- HTML 转换：[项目与 HTML](references/project-and-html.md)。
+- 定位和编辑：[检索与编辑](references/search-and-edit.md)。
+- 交互：[交互](references/interactions.md)。
+- 批量与证据：[批量与验证](references/batch-and-verify.md)。
 
 ## 执行约束
 
-- 命令输出是 JSON。内容在 `result` 里，`result` 不是最外层。`schema_version` 为 2。
-- 用返回的真实 ID（`scope_id`、`node_id` 等），不要猜。先用 `search explore --limit 5` 定位，需要时再读具体对象，不要一上来就列出所有页面节点。
-- 每执行一条命令都是独立一次。下一条命令要带上一步的输出文件；多处修改可以写成批量 JSON，参数以实际子命令的 `--help` 为准。
-- 输出默认另存新文件。要覆盖已有文件，必须用户明确要求并传 `--force`。批量执行出错立即停止，失败时不会写出文件；部分成功不要当成完整成功汇报。
-- 写完重新打开一次，再核对目标属性。检查文件结构、在 Axure 设计器里打开、预览交互是三件不同的事；没做实机验证就明确说明。
-- 汇报输出路径、实际改了哪些内容、验证到哪一步。遇到工具不支持的功能，要说清限制；不承诺任意 HTML 都能无损转换。
+- 以 `capabilities --json` 中命令参数声明为准；一般不必反复 `--help`。输出协议为 2，单操作读取 `result`，批量读取 `results`。
+- HTML 使用一次 `html import`，由 CLI 自动计算布局、写 RP、重新解析并产出计划/索引/报告。不要手算容器宽高、反复试导入或重复探测已有能力。
+- 编辑先 dump 一次，再用本地 JSONL 定位真实 `scope_id`/`node_id`。一次 batch 尽量完成修改，并通过 `--index` 做写前新鲜度校验。创建出的 ID 使用批量结果引用。
+- 计划自动缓存；显式 `--plan FILE` 失效时重新生成，不能绕过哈希检查。索引只读，不能手改后用于写入。
+- 输出默认另存新路径，已存在则换迭代文件名；只有用户明确要求覆盖才用 `--force`。
+- 同一问题不重复确认；只有业务含义或高成本分叉才提问。用户询问进度时引用已有证据，不重跑截图。
+- 结构、布局估算、视觉、交互分别汇报。CLI 自动检查不代表 Axure 视觉或交互实测；普通转换不打开 GUI，需要视觉验收时在交付检查点集中检查。
+- 汇报输出路径、变更、`.forge/summary.json` 和未验证项；检查失败的候选文件不能描述为最终交付。

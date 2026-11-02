@@ -5,17 +5,17 @@ binary=${1:?Usage: tests/install-download.sh BINARY}
 tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT
 mkdir -p "$tmp/assets" "$tmp/tools"
-mkdir -p "$tmp/assets/axure-forge-0.2.1-macos-arm64"
-cp "$binary" "$tmp/assets/axure-forge-0.2.1-macos-arm64/axure-forge"
-(cd "$tmp/assets" && tar -czf axure-forge-0.2.1-macos-arm64.tar.gz axure-forge-0.2.1-macos-arm64/axure-forge && shasum -a 256 axure-forge-0.2.1-macos-arm64.tar.gz > SHA256SUMS)
-for tool in uname dirname mktemp rm awk shasum chmod cp file mkdir mv tar cat basename; do ln -s "$(command -v "$tool")" "$tmp/tools/$tool"; done
+mkdir -p "$tmp/assets/axure-forge-0.3.0-macos-arm64"
+cp -RL "$(dirname "$binary")/." "$tmp/assets/axure-forge-0.3.0-macos-arm64/"
+(cd "$tmp/assets" && tar -czf axure-forge-0.3.0-macos-arm64.tar.gz axure-forge-0.3.0-macos-arm64 && shasum -a 256 axure-forge-0.3.0-macos-arm64.tar.gz > SHA256SUMS)
+for tool in uname dirname mktemp rm awk shasum chmod cp file mkdir mv tar cat basename sed ln bash; do ln -s "$(command -v "$tool")" "$tmp/tools/$tool"; done
 cat > "$tmp/tools/curl" <<'MOCK'
 #!/bin/bash
 set -euo pipefail
 asset=''; out=''
 while [ "$#" -gt 0 ]; do
  case "$1" in
-  https://github.com/qizhi2design/axureforge-cli/releases/download/v0.2.1/*) asset=${1##*/}; shift ;;
+  https://github.com/qizhi2design/axureforge-cli/releases/download/v0.3.0/*) asset=${1##*/}; shift ;;
   -o) out=$2; shift 2 ;;
   *) shift ;;
  esac
@@ -28,13 +28,13 @@ chmod +x "$tmp/tools/curl"
 PATH="$tmp/tools" TEST_RELEASE_DIR="$tmp/assets" /bin/bash "$ROOT/skills/axure-forge/scripts/install.sh" --bin-dir "$tmp/bin"
 "$tmp/bin/axure-forge" --version
 before=$(shasum -a 256 "$tmp/bin/axure-forge")
-printf '%064d  axure-forge-0.2.1-macos-arm64.tar.gz\n' 0 > "$tmp/assets/SHA256SUMS"
+printf '%064d  axure-forge-0.3.0-macos-arm64.tar.gz\n' 0 > "$tmp/assets/SHA256SUMS"
 if PATH="$tmp/tools" TEST_RELEASE_DIR="$tmp/assets" /bin/bash "$ROOT/skills/axure-forge/scripts/install.sh" --bin-dir "$tmp/bin" --force > "$tmp/failure.log" 2>&1; then exit 1; fi
 [ "$before" = "$(shasum -a 256 "$tmp/bin/axure-forge")" ]
 grep -q 'checksum mismatch' "$tmp/failure.log"
 # Restore checksum, then provide an archive with unexpected members.
 printf 'unexpected' > "$tmp/assets/extra"
-(cd "$tmp/assets" && tar -czf axure-forge-0.2.1-macos-arm64.tar.gz axure-forge-0.2.1-macos-arm64/axure-forge extra && shasum -a 256 axure-forge-0.2.1-macos-arm64.tar.gz > SHA256SUMS)
+(cd "$tmp/assets" && tar -czf axure-forge-0.3.0-macos-arm64.tar.gz axure-forge-0.3.0-macos-arm64 extra && shasum -a 256 axure-forge-0.3.0-macos-arm64.tar.gz > SHA256SUMS)
 if PATH="$tmp/tools" TEST_RELEASE_DIR="$tmp/assets" /bin/bash "$ROOT/skills/axure-forge/scripts/install.sh" --bin-dir "$tmp/bin" --force > "$tmp/failure.log" 2>&1; then exit 1; fi
 grep -q 'unexpected archive contents' "$tmp/failure.log"
 [ "$before" = "$(shasum -a 256 "$tmp/bin/axure-forge")" ]

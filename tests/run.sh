@@ -34,16 +34,16 @@ expect_failure bash "$S/inspect-rp.sh" --project "$tmp/header11.rp"
 expect_failure bash "$S/inspect-rp.sh" --project "$tmp/short.rp"
 expect_failure bash "$S/inspect-rp.sh" --project "$tmp/invalid.rp"
 expect_failure "$binary" project open --path "$tmp/header9.rp"
-cp "$binary" "$tmp/axure-forge"
-(cd "$tmp" && shasum -a 256 axure-forge > SHA256SUMS)
+cp -RL "$(dirname "$binary")" "$tmp/package"
+(cd "$tmp/package" && find . -type f -print | sed 's#^./##' | while IFS= read -r member; do shasum -a 256 "$member"; done) > "$tmp/SHA256SUMS"
 # Installation scripts see only stock system tools: no Python, pip, uv, npm or Node.
-PATH=/usr/bin:/bin:/usr/sbin:/sbin /bin/bash "$S/install.sh" --binary-path "$tmp/axure-forge" --checksum-path "$tmp/SHA256SUMS" --bin-dir "$tmp/bin"
+PATH=/usr/bin:/bin:/usr/sbin:/sbin /bin/bash "$S/install.sh" --package-dir "$tmp/package" --checksum-path "$tmp/SHA256SUMS" --bin-dir "$tmp/bin"
 PATH=/usr/bin:/bin:/usr/sbin:/sbin /bin/bash "$S/install.sh" --bin-dir "$tmp/bin"
 before=$(shasum -a 256 "$tmp/bin/axure-forge")
 printf '%064d  axure-forge\n' 0 > "$tmp/bad-sums"
-expect_failure bash "$S/install.sh" --binary-path "$tmp/axure-forge" --checksum-path "$tmp/bad-sums" --bin-dir "$tmp/bin" --force
+expect_failure bash "$S/install.sh" --package-dir "$tmp/package" --checksum-path "$tmp/bad-sums" --bin-dir "$tmp/bin" --force
 [ "$before" = "$(shasum -a 256 "$tmp/bin/axure-forge")" ]
-expect_failure bash "$S/install.sh" --binary-path "$tmp/axure-forge" --bin-dir "$tmp/bin" --force
+expect_failure bash "$S/install.sh" --package-dir "$tmp/package" --bin-dir "$tmp/bin" --force
 expect_failure bash "$S/install.sh" --version ../../invalid --bin-dir "$tmp/bin"
 node "$ROOT/tests/smoke.mjs" "$tmp/bin/axure-forge"
 printf 'PASS: environment, header gates, offline install, reuse, checksum preservation and business smoke\n'

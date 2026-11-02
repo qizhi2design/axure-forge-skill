@@ -1,34 +1,31 @@
 # 批量与验证
 
-批量 JSON 里 `schema_version` 固定填 2。操作名带点，参数名用下划线：
+```bash
+axure-forge dump --project input.rp --work-dir .forge
+# 通过 rg/jq 查 .forge/index/nodes.jsonl，不重复 page get
+axure-forge batch ops.json --project input.rp --index .forge/index --output output@v1.rp --verify
+```
+
+索引含源文件 SHA256 和索引文件校验。写入前检查源文件；成功输出会生成新索引，路径见 summary，不能继续沿用旧索引。已有操作占用 `--index`（位置序号）时，新鲜度参数名为 `--project-index`。
+
+批量 JSON：
 
 ```json
-{
-  "schema_version": 2,
-  "operations": [
-    {"op":"node.update","params":{"scope_id":"SCOPE","node_id":"NODE","changes":{"text":"确认"}}},
-    {"op":"page.rename","params":{"page_id":"PAGE","name":"首页"}}
-  ]
-}
+{"schema_version":2,"operations":[
+  {"op":"page.create","as":"detail","params":{"name":"详情"}},
+  {"op":"node.create","params":{"scope_id":{"$ref":"detail.scope_id"},"spec":{"kind":"text","text":"新页面"}}}
+]}
 ```
+
+`--project` 自动提供 project_id；新建项目也可命名结果并引用 `project.project_id`、`project.pages.0.scope_id`。引用只允许前面的已成功结果，缺字段、前向引用、重复别名均报错。操作出错不保存输出；现有批量格式保持兼容。
+
+导入和 batch 默认重新解析输出并生成证据。`--verify` 也可用于其他写入命令。`--evidence-dir DIR` 覆盖证据位置，`--fail-on error|warn|none` 控制门禁，默认 error。失败保留诊断和候选 RP，summary 标记 candidate。
 
 ```bash
-axure-forge batch ops.json --project input.rp --output output.rp
-axure-forge project open --path output.rp
+axure-forge dump --check --project input.rp --index .forge/index
+axure-forge verify --index .forge/index --json .forge/check.json
 ```
 
-带 `--project` 时，各操作里的 project_id 可以省略，命令会自动补上。批量结果在最外层的 `results[]`，单个操作的结果在最外层的 `result`。
+verify 读取索引不解析 RP；传 --project 时额外校验源文件。结构已检查、布局估算、视觉未检查、交互未检查分别报告。缺少画布或边框意图等依据时输出限制，不能声称通过了这些检查。不要把合法的多行文本、隐藏状态、叠层当成布局错误。
 
-不能用占位符引用上一步生成的 ID。先创建并保存、读出真实 ID，再写下一批操作。
-
-批量按顺序执行。出错时，返回里会有 `failed_index`、`applied_count` 和已经完成的结果。
-
-命令出错不会保存输出，批量也不支持整批回滚。要看命令的退出状态和错误信息，不能只看有没有返回结果。
-
-验证顺序：重新打开 → 确认 format_version=9 → 检查页面 → 定点读取改过的对象、事件、数据。
-
-要覆盖已有文件，必须用户明确要求并传 `--force`；否则另存新文件。目标文件已存在时，命令默认不会覆盖。
-
-在 RP9 里打开、保存、预览测试，和检查文件结构，要分开汇报。
-
-没有真的在界面上操作过，就标成“未验证”。结构检查通过，不等于交互一定正确。
+验收报告路径直接复用；不因用户问“好了吗”而再次打开 GUI。只有需要视觉或交互验收时才集中打开 Axure。
