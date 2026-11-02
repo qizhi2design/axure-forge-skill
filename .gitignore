@@ -1,0 +1,4 @@
+.DS_Store
+benchmarks/
+node_modules/
+tests/benchmark.test.mjs
