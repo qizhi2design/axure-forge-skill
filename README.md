@@ -1,241 +1,245 @@
 <p align="center">
-  <img src="docs/images/banner.jpg" alt="AxureForge Skill —— 说一句话，改一个原型" width="100%">
+  <b>English</b> · <a href="README.zh-CN.md">简体中文</a>
+</p>
+
+<p align="center">
+  <img src="docs/images/banner.jpg" alt="AxureForge Skill — describe the change, get the prototype" width="100%">
 </p>
 
 <h1 align="center">AxureForge Skill</h1>
 
-<p align="center"><b>说一句话，改一个原型。</b></p>
+<p align="center"><b>Describe the change. Get the prototype.</b></p>
 <p align="center">
-  用日常语言让 AI 助手分析、新建和修改 Axure RP9/RP11 原型<br>
-  不记命令，不碰文件格式。
+  Analyze, create and edit Axure RP9 / RP11 prototypes in plain language.<br>
+  No commands to memorize. No file format to learn.
 </p>
 
 <p align="center">
-  <img alt="适用于 Axure RP9/RP11" src="https://img.shields.io/badge/Axure-RP9%20%2F%20RP11-0A7AFF">
-  <img alt="可与 Claude / Codex 配合" src="https://img.shields.io/badge/works%20with-Claude%20%7C%20Codex-7C3AED">
-  <img alt="许可证 MIT" src="https://img.shields.io/badge/license-MIT-22C55E">
+  <img alt="Works with Axure RP9 / RP11" src="https://img.shields.io/badge/Axure-RP9%20%2F%20RP11-0A7AFF">
+  <img alt="Works with Claude / Codex" src="https://img.shields.io/badge/works%20with-Claude%20%7C%20Codex-7C3AED">
+  <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-22C55E">
 </p>
 
 <p align="center">
-  <img alt="HTML 转原型" src="https://img.shields.io/badge/HTML%E8%BD%AC%E5%8E%9F%E5%9E%8B-22D3EE?style=flat-square">
-  <img alt="画布约定" src="https://img.shields.io/badge/%E7%94%BB%E5%B8%83%E7%BA%A6%E5%AE%9A-22D3EE?style=flat-square">
-  <img alt="严格转换" src="https://img.shields.io/badge/%E4%B8%A5%E6%A0%BC%E8%BD%AC%E6%8D%A2-22D3EE?style=flat-square">
-  <img alt="批量修改" src="https://img.shields.io/badge/%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9-22D3EE?style=flat-square">
+  <img alt="HTML to prototype" src="https://img.shields.io/badge/HTML%E8%BD%AC%E5%8E%9F%E5%9E%8B-22D3EE?style=flat-square">
+  <img alt="Canvas agreement" src="https://img.shields.io/badge/%E7%94%BB%E5%B8%83%E7%BA%A6%E5%AE%9A-22D3EE?style=flat-square">
+  <img alt="Strict conversion" src="https://img.shields.io/badge/%E4%B8%A5%E6%A0%BC%E8%BD%AC%E6%8D%A2-22D3EE?style=flat-square">
+  <img alt="Batch edits" src="https://img.shields.io/badge/%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9-22D3EE?style=flat-square">
 </p>
 
 <p align="center">
-  <a href="#能做什么">能做什么</a> ·
-  <a href="#它是怎么工作的">它是怎么工作的</a> ·
-  <a href="#安装">安装</a> ·
-  <a href="#怎么用">怎么用</a> ·
-  <a href="#进阶与可选设置">进阶与可选设置</a> ·
-  <a href="#常见问题">常见问题</a>
+  <a href="#what-it-does">What it does</a> ·
+  <a href="#how-it-works">How it works</a> ·
+  <a href="#install">Install</a> ·
+  <a href="#usage">Usage</a> ·
+  <a href="#advanced-options">Advanced options</a> ·
+  <a href="#faq">FAQ</a>
 </p>
 
-## 能做什么
+## What it does
 
-- 🔍 **看懂老原型** —— 一次说清有哪些页面、每页有什么元件、挂了哪些交互。
-- 🧱 **从零搭页面** —— 先约定画布，再生成骨架：页面范围、目标端、宽度、首屏高度、是否纵向延展。
-- 🌐 **网页转原型** —— 把现成的网页读成可以继续编辑的 RP 文件，另存为新文件。
-- ✏️ **批量改文案** —— 比如把页面里的「提交」统一改成「确认提交」，一次提交，改不成功就一条都不留。
-- 👆 **配交互** —— 给按钮配「点击切换面板状态」这类动作，并说清挂在哪个元件上。
-- 🔄 **RP9 与 RP11 严格转换** —— 先预检再转换，能力不够时如实告诉你，不做隐式转换。
-- ✅ **没有编辑器也能生成与校验** —— 装好就能建文件、查结构和属性；只有视觉验收才需要打开 Axure。
+- 🔍 **Understand existing prototypes** — one pass tells you which pages exist, what widgets each page has, and which interactions are wired.
+- 🧱 **Build pages from scratch** — agree the canvas first, then generate the skeleton: page scope, target device, width, first-screen height, and fixed vs. vertically extending.
+- 🌐 **Web page to prototype** — read an existing web page into an editable RP file, saved as a new file.
+- ✏️ **Batch text edits** — for example, change every "Submit" to "Confirm submit" in one pass; if anything fails, nothing is left behind.
+- 👆 **Wire interactions** — attach actions such as "click to switch panel state" to a button, and say exactly which widget they live on.
+- 🔄 **Strict RP9 ↔ RP11 conversion** — preflight first, then convert; when a capability is missing it tells you honestly instead of converting implicitly.
+- ✅ **Generate and validate without the editor** — once installed you can create files and inspect structure and properties; only visual acceptance needs Axure open.
 
-## 它是怎么工作的
+## How it works
 
-整个过程分四步，中间的事它来做。
+The whole flow takes four steps. It handles everything in between.
 
-1. **你提需求** —— 用中文说一句就行。
-2. **约定页面与画布** —— 新建或大幅改版时，一次确认页面范围、目标端、画布宽度、首屏高度，以及固定高度还是纵向延展；已有约定直接沿用。
-3. **生成或修改 .rp** —— 可以套用内置模板起点，由 AxureForge 自动计算布局，并产出计划、索引和报告作为证据。
-4. **你在 Axure 里打开验收** —— 看效果，不满意就接着说。
+1. **You describe what you need** — one sentence is enough.
+2. **Agree the pages and canvas** — when creating or heavily redesigning, confirm page scope, target device, canvas width, first-screen height, and fixed vs. vertically extending in one go; reuse an existing agreement as-is.
+3. **Generate or modify the .rp** — you can start from a built-in template; AxureForge computes the layout and produces a plan, an index, and a report as evidence.
+4. **You open it in Axure to check** — look at the result, and if it isn't right, just keep talking.
 
-## 使用前准备
+## Before you start
 
-- 安装和生成都不要求已安装 Axure 编辑器。
-- 只有做原生视觉验收时，才需要打开对应版本的 RP9/RP11 编辑器。
-- 不需要另外装运行环境，装好就能用。
+- Installing and generating do not require the Axure editor.
+- Only native visual acceptance needs the matching RP9/RP11 editor open.
+- No separate runtime is needed; once installed, it works.
 
-当前 skill 版本 0.3.0，协议 v3，要求 CLI 0.3.0 及以上。
+Current skill version 0.3.0, protocol v3, requires CLI 0.3.0 or later.
 
-## 安装
+## Install
 
-第一条命令只是看看这个仓库里有什么：
+The first command only lists what is in this repository:
 
 ```bash
 npx skills add qizhi2design/axure-forge-skill --list
 ```
 
-第二条命令把 AxureForge 装到你的 AI 助手里：
+The second installs AxureForge into your AI assistant:
 
 ```bash
 npx skills add qizhi2design/axure-forge-skill --skill axure-forge --agent codex --global
 ```
 
-安装会用到 `npx` 命令。如果提示找不到这个命令，先装一次 npm（npm 官网有安装包）再回来。
-所需的程序从公开下载页获取（[axureforge-cli](https://github.com/qizhi2design/axureforge-cli)），不需要登录。
+Installation uses the `npx` command. If it is not found, install npm once (the npm website has installers) and come back.
+The required program is downloaded from a public page ([axureforge-cli](https://github.com/qizhi2design/axureforge-cli)); no login needed.
 
-装好以后，在 AI 助手里用 `$axure-forge` 就能唤起它。
+Once installed, invoke it in your AI assistant with `$axure-forge`.
 
-## 怎么用
+## Usage
 
-直接用中文说需求就行，不用记命令。
+Just describe what you need in plain language — no commands to memorize.
 
-| 你说的话 | 它会做什么 |
+| You say | What it does |
 | --- | --- |
-| `$axure-forge 检查 RP9 环境` | 确认本机的 Axure RP9 能不能配合工作，缺什么会直接说。 |
-| `$axure-forge 分析 ./demo.rp 的页面和交互` | 列出有哪些页面、页面上有什么元件、挂了什么交互。 |
-| `$axure-forge 将 ./site 转换为 ./demo.rp` | 把网页文件夹读成可编辑的原型，另存为新文件。 |
-| `$axure-forge 将 ./demo.rp 中「提交」改为「确认提交」，另存为 ./edited.rp` | 找到文字所在位置，改完另存，原文件不动。 |
-| `$axure-forge 创建两个状态的面板，并为按钮添加切换交互` | 新建两状态面板，把按钮接上「点击切换状态」。 |
-| `$axure-forge 把 ./demo.rp 转成 RP11，另存为 ./demo-rp11.rp` | 先预检兼容性，再严格转换并另存；原文件不动。 |
-| `$axure-forge 用桌面看板模板起一个 1440 宽的原型` | 以看板模板为起点，按约定画布生成新原型。 |
+| `$axure-forge 检查 RP9 环境` | Confirms whether the local Axure RP9 can work with it, and says directly what is missing. |
+| `$axure-forge 分析 ./demo.rp 的页面和交互` | Lists the pages, the widgets on each page, and the interactions wired to them. |
+| `$axure-forge 将 ./site 转换为 ./demo.rp` | Reads a web folder into an editable prototype, saved as a new file. |
+| `$axure-forge 将 ./demo.rp 中「提交」改为「确认提交」，另存为 ./edited.rp` | Finds where the text lives, makes the change, and saves as a new file, leaving the original untouched. |
+| `$axure-forge 创建两个状态的面板，并为按钮添加切换交互` | Creates a two-state panel and wires the button to "click to switch state". |
+| `$axure-forge 把 ./demo.rp 转成 RP11，另存为 ./demo-rp11.rp` | Preflights compatibility first, then converts strictly and saves as new; the original is untouched. |
+| `$axure-forge 用桌面看板模板起一个 1440 宽的原型` | Starts from the dashboard template and generates a new prototype on the agreed canvas. |
 
-第一次使用会嗅探 RP9/RP11 环境并检查协议 v3 能力，再准备需要的程序。已经装过且版本合适的会直接复用。
+On first use it sniffs the RP9/RP11 environment and checks protocol v3 capabilities, then prepares the required programs. Anything already installed at a suitable version is reused.
 
-## 进阶与可选设置
+## Advanced options
 
 <details>
-<summary><b>画布约定：什么时候要确认，什么时候沿用</b></summary>
+<summary><b>Canvas agreement: when to confirm, when to reuse</b></summary>
 
-新建原型、新增独立页面或大幅调整布局时，需要先约定画布。
-一次确认这几件事：页面范围、目标端、画布宽度、首屏高度，以及固定高度还是纵向延展。
+When creating a prototype, adding a standalone page, or significantly changing the layout, agree the canvas first.
+Confirm these in one go: page scope, target device, canvas width, first-screen height, and fixed vs. vertically extending.
 
-只改文字、元件属性或交互时，沿用已有布局，不重新确认。
-本次对话或项目里已经确认过的规格，也直接沿用。
+When you are only changing text, widget properties, or interactions, reuse the existing layout and do not re-confirm.
+Specs already confirmed in this conversation or project are reused as-is.
 
-信息不够时它会先给具体建议，一次性请你确认；确认前不开工。
-CLI 的默认尺寸不算你已确认的尺寸。
+When information is insufficient it offers concrete suggestions first and asks you to confirm once; it does not start before you confirm.
+The CLI's default dimensions do not count as dimensions you have confirmed.
 
-约定会记在工作目录的 `design-brief.md`（默认在 `.forge/` 下）。
+The agreement is recorded in `design-brief.md` in the working directory (under `.forge/` by default).
 
 </details>
 
 <details>
-<summary><b>模板起点：3 个内置模板与尺寸</b></summary>
+<summary><b>Starter templates: 3 built-ins</b></summary>
 
-| 模板 | 建议尺寸 | 包含区块 |
+| Template | Size | Sections |
 | --- | --- | --- |
-| 桌面看板 | 1440×900 | 侧栏、关键指标、任务列表、来源分布 |
-| 桌面列表与表单 | 1440×900 | 筛选、数据表格、编辑表单 |
-| 移动端详情 | 390×844 | 页头、详情卡片、跟进记录、底部操作 |
+| Desktop dashboard | 1440×900 | Sidebar, key metrics, task list, source breakdown |
+| Desktop list and form | 1440×900 | Filters, data table, edit form |
+| Mobile detail | 390×844 | Header, detail card, follow-up records, bottom actions |
 
-三个模板默认都是纵向延展，内容超出首屏后往下长。
-模板只是起点，不是已经确认的需求；用哪个、改成什么样，都按你的画布约定来。
-
-</details>
-
-<details>
-<summary><b>证据链与索引：.forge、dump、batch</b></summary>
-
-工作目录默认是 `.forge/`，可以用 `--work-dir` 换成别的位置。
-每次先读其中的 `summary.json`；只有出问题时才细看报告或索引。
-
-`dump` 会完整解析一次项目并生成索引，之后在本地查询，不把整份节点数据灌进对话。
-
-`batch` 是原子提交：一次写完，失败就整体回滚，不保留中间编辑。
-新生成的元件可以按前一步的结果引用，接着做下一步修改。
+All three templates extend vertically by default, so content grows downward past the first screen.
+A template is only a starting point, not a confirmed requirement; which one you use and how you change it follow your canvas agreement.
 
 </details>
 
 <details>
-<summary><b>版本选择与更新</b></summary>
+<summary><b>Evidence and index: .forge, dump, batch</b></summary>
 
-新建时的默认版本，按这个顺序决定：你明确指定 → 本项目已确认的约定 → 环境嗅探。
+The working directory is `.forge/` by default; use `--work-dir` to put it elsewhere.
+Each time, read `summary.json` in it first; only dig into reports or indexes when something goes wrong.
 
-嗅探规则：只装了 RP11 时默认 11；只装了 RP9、两者都有、或都没装时默认 9。
-两者都有而交付对象又不明确时，会问你一次，并建议 RP9。
+`dump` fully parses a project once and builds an index, so later queries run locally without pouring all node data into the conversation.
 
-已有文件默认保持源格式，不会悄悄换版本；转换必须你明确要求，先预检再严格转换另存。
+`batch` is an atomic commit: it writes everything at once and rolls back as a whole on failure, keeping no partial edits.
+Newly generated widgets can be referenced from the previous step's result for the next change.
 
-`doctor.sh` 支持的参数：`--axure-path`、`--format-version 9|11`、`--app-only`、`--check-updates`。
+</details>
 
-检查更新请用（在 skill 目录下运行）：
+<details>
+<summary><b>Version choice and updates</b></summary>
+
+The default version for new files is decided in this order: what you specify explicitly → the agreement already confirmed for this project → environment sniffing.
+
+Sniffing rules: if only RP11 is installed, default to 11; if only RP9 is installed, both are installed, or neither is installed, default to 9.
+When both are present and the delivery target is unclear, it asks once and suggests RP9.
+
+Existing files keep their source format by default and never switch versions quietly; conversion requires your explicit request — preflight first, then a strict conversion saved as a new file.
+
+`doctor.sh` accepts: `--axure-path`, `--format-version 9|11`, `--app-only`, `--check-updates`.
+
+To check for updates (run from the skill directory):
 
 ```bash
 bash skills/axure-forge/scripts/doctor.sh --check-updates
 ```
 
-装到别处的话，把前面的目录换成你实际的 skill 所在路径。
+If it is installed elsewhere, replace the directory above with the actual skill path.
 
-CLI 的自更新入口还没随发布版提供，所以升级走安装脚本：重跑上面的安装命令即可。
-检查不到版本时会直接说明，不会说成「已是最新」。
+The CLI's self-update entry point has not shipped yet, so upgrades go through the install script: rerun the install command above.
+When it cannot determine a version it says so directly and never claims "already up to date".
 
-更多安装选项见 [安装说明](skills/axure-forge/references/installation.md)。
-
-</details>
-
-## 常见问题
-
-<details>
-<summary><b>装好了，但 AI 助手里没反应？</b></summary>
-
-先确认是用 `$axure-forge` 唤起它的。第一次运行会嗅探编辑器环境并检查需要的程序，稍等一下。
+More install options: [installation notes (Chinese)](skills/axure-forge/references/installation.md).
 
 </details>
 
-<details>
-<summary><b>提示找不到 npx 命令？</b></summary>
+## FAQ
 
-先装一次 npm（npm 官网有安装包），装好再回来跑安装命令。
+<details>
+<summary><b>Installed, but the AI assistant doesn't respond?</b></summary>
+
+First make sure you invoke it with `$axure-forge`. The first run sniffs the editor environment and checks the required programs, so give it a moment.
 
 </details>
 
 <details>
-<summary><b>改动会覆盖原文件吗？</b></summary>
+<summary><b>It says the npx command cannot be found?</b></summary>
 
-默认另存为新文件，不会覆盖你的原文件。要覆盖必须你明确要求。
-
-</details>
-
-<details>
-<summary><b>Axure 没装在默认位置怎么办？</b></summary>
-
-直接告诉它你的安装路径。自动嗅探「应用程序」中的 RP9/RP11，也支持指定自定义位置。
+Install npm once (the npm website has installers), then come back and run the install command again.
 
 </details>
 
 <details>
-<summary><b>能处理 Axure RP9 的文件吗？</b></summary>
+<summary><b>Will changes overwrite the original file?</b></summary>
 
-能。读取、编辑和保存 RP9；已有文件默认保持源格式，不会顺手换成 RP11。
-
-</details>
-
-<details>
-<summary><b>能处理 Axure RP11 的文件吗？</b></summary>
-
-能。读取、编辑和保存 RP11；要换版本时会先预检，再严格转换另存。
+By default it saves to a new file and does not overwrite your original. Overwriting requires your explicit request.
 
 </details>
 
 <details>
-<summary><b>能不能不装 Axure 就用？</b></summary>
+<summary><b>What if Axure is not installed in the default location?</b></summary>
 
-能。安装、生成、修改和结构校验都不需要编辑器。
-只有看真实视觉效果和交互时，才需要打开对应版本的 Axure。
+Just tell it your install path. It auto-detects RP9/RP11 in Applications and also accepts a custom location.
 
 </details>
 
 <details>
-<summary><b>RP9 和 RP11 怎么选？</b></summary>
+<summary><b>Can it handle Axure RP9 files?</b></summary>
 
-看交付对象：团队还在用 RP9 就选 9。两者都有又没明确要求时，默认 9。
-已有文件默认保持原格式，不会顺手帮你换版本。
+Yes. It reads, edits, and saves RP9; existing files keep their source format by default and are not quietly switched to RP11.
 
 </details>
 
-## 使用提醒
+<details>
+<summary><b>Can it handle Axure RP11 files?</b></summary>
 
-- RP9 文件可以读取、编辑和保存。
-- RP11 文件可以读取、编辑和保存。
-- 已有文件默认保持源格式；要换版本必须先预检再严格转换，不做隐式转换。
-- 修改默认另存为新文件，不会覆盖你的原文件。要覆盖必须你明确要求。
-- 自动检查只验证文件结构和属性。交互效果请在 Axure 里实际预览确认。
-- 网页转原型不是 100% 还原。浏览器里的脚本和复杂排版可能对不上，转完要自己过一遍。
+Yes. It reads, edits, and saves RP11; when a version change is needed it preflights first, then strictly converts and saves as a new file.
 
-## 许可证
+</details>
 
-AxureForge Skill 采用 MIT 许可证，全文见 [LICENSE](LICENSE)。
-随包提供的 AxureForge 程序也采用 MIT 许可证。
+<details>
+<summary><b>Can I use it without installing Axure?</b></summary>
+
+Yes. Installing, generating, modifying, and structural validation all work without the editor.
+Only checking real visual results and interactions needs the matching Axure version open.
+
+</details>
+
+<details>
+<summary><b>How do I choose between RP9 and RP11?</b></summary>
+
+Look at the delivery target: if the team still uses RP9, choose 9. When both are available and nothing is specified, default to 9.
+Existing files keep their original format by default and it will not quietly switch versions for you.
+
+</details>
+
+## Notes
+
+- RP9 files can be read, edited, and saved.
+- RP11 files can be read, edited, and saved.
+- Existing files keep their source format by default; changing versions requires preflight then strict conversion, with no implicit conversion.
+- Changes are saved to a new file by default and never overwrite your original. Overwriting requires your explicit request.
+- Automated checks only validate file structure and properties. Preview interactions in Axure to confirm them for real.
+- Web page to prototype is not a 100% reproduction. Scripts and complex layout in the browser may not match, so review the result yourself after converting.
+
+## License
+
+The AxureForge Skill is released under the MIT License; see [LICENSE](LICENSE) for the full text.
+The AxureForge program shipped with it is also released under the MIT License.
