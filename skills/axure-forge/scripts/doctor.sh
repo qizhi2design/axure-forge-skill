@@ -2,14 +2,15 @@
 set -euo pipefail
 SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
 source "$SCRIPT_DIR/common.sh"
-app=''; binary=''; preferred=''; app_only=0
+app=''; binary=''; preferred=''; app_only=0; check_updates=0
 while [ "$#" -gt 0 ]; do
   case "$1" in
     --axure-path) need_value "$@"; app=$2; shift 2 ;;
     --binary-path) need_value "$@"; binary=$2; shift 2 ;;
     --format-version) need_value "$@"; preferred=$2; shift 2 ;;
+    --check-updates) check_updates=1; shift ;;
     --app-only) app_only=1; shift ;;
-    --help|-h) printf '%s\n' 'Usage: doctor.sh [--axure-path APP] [--binary-path CLI] [--format-version 9|11] [--app-only]' 'Editors are optional. Only RP11 detected: default 11; otherwise default 9. Explicit format wins.'; exit 0 ;;
+    --help|-h) printf '%s\n' 'Usage: doctor.sh [--axure-path APP] [--binary-path CLI] [--format-version 9|11] [--app-only] [--check-updates]' 'Editors are optional. Only RP11 detected: default 11; otherwise default 9. Explicit format wins.'; exit 0 ;;
     *) fail "unknown option: $1" ;;
   esac
 done
@@ -41,3 +42,13 @@ html_cli=$(printf '%s' "$capabilities" | /usr/bin/plutil -extract 'result.cli.ht
 case "$html_cli" in *'"--format-version"'*) ;; *) fail 'CLI HTML import lacks explicit format selection' ;; esac
 printf 'cli_path=%s\ncli_version=%s\nprotocol_version=3\n' "$binary" "$version"
 if ! command -v axure-forge >/dev/null; then printf 'PATH: add %s to PATH\n' "$(dirname "$binary")" >&2; fi
+
+skill_version=$(/usr/bin/plutil -extract version raw -o - "$SCRIPT_DIR/../skill-manifest.json" 2>/dev/null || printf 'unknown')
+printf 'skill_version=%s\n' "$skill_version"
+if [ "$check_updates" -eq 1 ]; then
+  if printf '%s' "$capabilities" | /usr/bin/plutil -extract 'result.cli.update check' json -o - - >/dev/null 2>&1; then
+    "$binary" update check --path "$SCRIPT_DIR/.." --json
+  else
+    printf '%s\n' 'update_check=unsupported; 当前 CLI 没有更新入口，请先安装支持更新的新版本。'
+  fi
+fi

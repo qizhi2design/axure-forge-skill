@@ -61,7 +61,7 @@ The whole flow takes four steps. It handles everything in between.
 - Only native visual acceptance needs the matching RP9/RP11 editor open.
 - No separate runtime is needed; once installed, it works.
 
-Current skill version 0.3.0, protocol v3, requires CLI 0.3.0 or later.
+Current skill version 0.4.0, protocol v3, requires CLI 0.4.0 or later.
 
 ## Install
 
@@ -243,3 +243,8 @@ Existing files keep their original format by default and it will not quietly swi
 
 The AxureForge Skill is released under the MIT License; see [LICENSE](LICENSE) for the full text.
 The AxureForge program shipped with it is also released under the MIT License.
+
+
+## Check and update
+
+Run `axure-forge update check` to inspect CLI and skill versions, then `axure-forge update all --dry-run` to preview and `axure-forge update all --yes` to apply. Offline use remains available; unreachable release sources leave the current installation intact. Updated skills need to be reloaded. See [update and source settings](skills/axure-forge/references/installation.md).

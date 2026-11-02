@@ -1,0 +1,15 @@
+name: Skill release contract
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 tests/release-contract.py
+      - run: bash -n skills/axure-forge/scripts/install.sh
+      - run: bash -n skills/axure-forge/scripts/doctor.sh

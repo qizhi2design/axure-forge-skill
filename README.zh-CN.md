@@ -61,7 +61,7 @@
 - 只有做原生视觉验收时，才需要打开对应版本的 RP9/RP11 编辑器。
 - 不需要另外装运行环境，装好就能用。
 
-当前 skill 版本 0.3.0，协议 v3，要求 CLI 0.3.0 及以上。
+当前 skill 版本 0.4.0，协议 v3，要求 CLI 0.4.0 及以上。
 
 ## 安装
 
@@ -243,3 +243,8 @@ CLI 的自更新入口还没随发布版提供，所以升级走安装脚本：�
 
 AxureForge Skill 采用 MIT 许可证，全文见 [LICENSE](LICENSE)。
 随包提供的 AxureForge 程序也采用 MIT 许可证。
+
+
+## 检查和更新
+
+使用 `axure-forge update check` 检查 CLI 和 skill 版本，`axure-forge update all --dry-run` 预览，`axure-forge update all --yes` 执行。断网不影响使用，发布源不可达时保留当前安装；更新 skill 后重新加载。更换发布仓库、镜像及覆盖规则见[安装说明](skills/axure-forge/references/installation.md)。

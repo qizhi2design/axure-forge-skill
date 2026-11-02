@@ -26,6 +26,14 @@ description: 设计、创建和编辑 Axure RP9/RP11 原型，先明确页面范
 - 有 RP 输入时直接 `dump --project FILE` 完整解析并生成索引，替代“检查文件头 → project open → page list → page get”的多次往返。RP9/RP11 均可编辑，其他版本拒绝；默认不转换。
 - 默认工作目录是当前目录的 `.forge/`，可传 `--work-dir DIR`。先读 `summary.json`；只针对异常读取 report 或索引，不把完整节点数据载入对话。
 
+## 版本检查与手动更新
+
+- 日常操作使用本地 CLI；不能因为断网、版本服务不可用或更新失败而阻止原型任务，也不能循环重试安装。
+- 用户要求检查版本时执行 `axure-forge update check --path /ABS/SKILL --json`，或 `bash scripts/doctor.sh --check-updates`。检查状态为 `unavailable` 时说明暂时无法检查，继续使用本地版本；不得称为“已是最新版”。
+- 用户要求更新时，先执行 `update all --path /ABS/SKILL --dry-run --json` 展示来源、版本和位置，再沿用用户已有授权执行 `update all --path /ABS/SKILL --yes --json`。可以只更新 `cli` 或 `skill`。用户未要求更新时不自动安装。
+- 多份 skill 必须指定当前 skill 的真实路径；未知版本或本地修改需要用户明确授权覆盖后才传 `--force`。保留备份，完成后提示重新加载 skill 或开启新会话。
+- CLI 支持更换 GitHub 仓库与 HTTPS 镜像，参见 [安装说明](references/installation.md)。CLI 缺少更新入口时才使用安装脚本引导。
+
 ## 按任务加载
 
 当前任务相关参考说明只需读一次：

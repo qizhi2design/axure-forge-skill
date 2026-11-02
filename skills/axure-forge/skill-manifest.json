@@ -1,0 +1,29 @@
+{
+  "manifest_version": 1,
+  "name": "axure-forge",
+  "version": "0.4.0",
+  "protocol_version": 3,
+  "cli_min_version": "0.4.0",
+  "cli_max_version": null,
+  "platforms": [
+    "macos-arm64"
+  ],
+  "files": {
+    "SKILL.md": "56628978c9c223a5acb29af319b8734c612de9e1689a691721874164e436110d",
+    "agents/openai.yaml": "4026dcf6ddb75d7c2379b373ca0021ac55aa841854cb2e676b9f1acadb6d15d6",
+    "assets/html-templates/desktop-dashboard.html": "8c630712b0ef4f9564ebbb8f1bdf993550ed65f6ab6b1e9735ec75f1674286e4",
+    "assets/html-templates/desktop-list-form.html": "77c0a9466efbbc7f846d558b4fe0b0f04b78a5214126549b1ec8b5e784a73afe",
+    "assets/html-templates/manifest.json": "ae1f9bae462ca99d10768d0469192a269b4c3168943a1dbc051acf5c5f7cc909",
+    "assets/html-templates/mobile-detail.html": "4505350d2b01b13b61df9b892bcd710625dfe4506b2a2003f2a7a43dbe86cd5a",
+    "references/batch-and-verify.md": "385ab4665104d7bbeb77b536f56350784f4428ef85c0aa7907795042f5954b12",
+    "references/html-templates.md": "59fd7e0ded1cefbe9a88bc1eeee4eb0078e1429baae669ff955ededb26dca6f2",
+    "references/installation.md": "9f9a12d6693f6a73bf8fa1ee5e1914ebb006a17637ac3b4a8be927763c85ca7a",
+    "references/interactions.md": "02aecadaa5939b9201f7e4186c04d1b92d270a0178f7b1c3c2d1187a97d4fe28",
+    "references/project-and-html.md": "ce8ee11eba572a6b28d73d4ea0ee903d810ba85b43f58032a9cbf53156fee8f9",
+    "references/search-and-edit.md": "96a605ab19fa75ef3ae29c39923eab395a8cea3caa93eb5da09e0fee9b5ffe09",
+    "scripts/common.sh": "ea654cc0a49c05e8c5e8a27e224fb892141c4215a08ad7a8720de2cbdddaf0c5",
+    "scripts/doctor.sh": "3954f91868cbc1e923e6334fc439ebc987d5a63c77f07a89e7b6e96fa4de04e6",
+    "scripts/inspect-rp.sh": "ee329493d6d95fbef7ca4279e8024208f795026861b2a536a9240008157f79c5",
+    "scripts/install.sh": "989a847333ada190273d1e66278742e23884390b56e7d2544114c41d1432fb21"
+  }
+}

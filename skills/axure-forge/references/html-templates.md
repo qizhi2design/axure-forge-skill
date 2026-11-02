@@ -25,6 +25,6 @@ axure-forge html import ./site --page-size 1440x900 --page-mode auto --output pr
 
 ## 版本与验收
 
-三份模板在包含盒模型零值修复的源码 CLI 中已通过 `--fail-on warn`，无不支持项。已发布 CLI 0.3.0 可导入这些模板，但会保留默认描边、内边距相关警告；检查实际 report，不将告警或结构通过描述为视觉通过。该源码修复未自动替换现有二进制。
+三份模板在包含盒模型零值修复的源码 CLI 中已通过 `--fail-on warn`，无不支持项。已发布 CLI 0.3.0 可导入这些模板，但会保留默认描边、内边距相关警告；检查实际 report，不将告警或结构通过描述为视觉通过。0.4.0 发布包包含该修复；使用 0.3.0 的用户需要升级，既有安装不会自动替换。
 
 维护者可运行 `node tests/templates.mjs /ABS/axure-forge --strict` 复验；普通模式保留旧 CLI 告警，严格模式要求 0 error / 0 warn。此脚本用于仓库维护，不要求使用 skill 的用户安装 Node。
