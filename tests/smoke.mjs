@@ -31,7 +31,10 @@ function run(args, expected = 0) {
     `${args.join(" ")}\n${r.stderr}\n${r.stdout}`,
   );
   count++;
-  return JSON.parse(r.stdout);
+  const payload = JSON.parse(r.stdout);
+  assert.equal(payload.schema_version, 3);
+  assert.equal(payload.ok, expected === 0);
+  return payload;
 }
 try {
   const p = run([
@@ -187,7 +190,7 @@ try {
   writeFileSync(
     join(dir, "ops.json"),
     JSON.stringify({
-      schema_version: 2,
+      schema_version: 3,
       operations: [
         {
           op: "node.update",
@@ -202,7 +205,8 @@ try {
     }),
   );
   const output = "batch.rp";
-  run(["batch", "ops.json", "--project", current, "--output", output]);
+  const batch = run(["batch", "ops.json", "--project", current, "--output", output]);
+  assert.equal(batch.result.results.length, 2);
   current = output;
   assert.equal(
     run([
@@ -239,7 +243,7 @@ try {
   writeFileSync(
     join(dir, "bad.json"),
     JSON.stringify({
-      schema_version: 2,
+      schema_version: 3,
       operations: [
         {
           op: "node.update",
@@ -257,9 +261,13 @@ try {
     ["batch", "bad.json", "--project", current, "--output", "failed.rp"],
     1,
   );
-  assert.equal(failed.error.applied_count, 1);
-  assert.equal(failed.error.failed_index, 1);
+  assert.equal(failed.error.details.applied_count, 0);
+  assert.equal(failed.error.details.failed_index, 1);
   assert.ok(!existsSync(join(dir, "failed.rp")));
+  assert.deepEqual(readFileSync(join(dir, current)), before);
+  writeFileSync(join(dir, "v2.json"), JSON.stringify({ schema_version: 2, operations: [] }));
+  run(["batch", "v2.json", "--project", current, "--output", "v2.rp"], 2);
+  assert.ok(!existsSync(join(dir, "v2.rp")));
   writeFileSync(
     join(dir, "index.html"),
     "<html><body><h1>商品详情</h1><button>立即购买</button></body></html>",
@@ -281,6 +289,11 @@ try {
       "5",
     ]).result.items.length,
   );
+  run(["html", "import", "index.html", "--format-version", "11", "--output", "html11.rp"]);
+  assert.equal(run(["project", "open", "--path", "html11.rp"]).result.format_version, 11);
+  run(["project", "check-conversion", "--project", "html11.rp", "--target-version", "9"]);
+  run(["project", "convert", "--project", "html11.rp", "--target-version", "9", "--output", "converted9.rp"]);
+  assert.equal(run(["project", "open", "--path", "converted9.rp"]).result.format_version, 9);
   console.log(
     JSON.stringify(
       {

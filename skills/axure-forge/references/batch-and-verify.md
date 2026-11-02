@@ -11,13 +11,15 @@ axure-forge batch ops.json --project input.rp --index .forge/index --output outp
 批量 JSON：
 
 ```json
-{"schema_version":2,"operations":[
+{"schema_version":3,"operations":[
   {"op":"page.create","as":"detail","params":{"name":"详情"}},
   {"op":"node.create","params":{"scope_id":{"$ref":"detail.scope_id"},"spec":{"kind":"text","text":"新页面"}}}
 ]}
 ```
 
-`--project` 自动提供 project_id；新建项目也可命名结果并引用 `project.project_id`、`project.pages.0.scope_id`。引用只允许前面的已成功结果，缺字段、前向引用、重复别名均报错。操作出错不保存输出；现有批量格式保持兼容。
+`--project` 自动提供 project_id；新建项目也可命名结果并引用 `project.project_id`、`project.pages.0.scope_id`。引用只允许前面的已成功结果，缺字段、前向引用、重复别名均报错。成功为 `{"schema_version":3,"ok":true,"result":{"results":[...]}}`。失败为 `ok:false`，错误位于 `error.code/message/details`；`details.failed_index` 从 0 开始，`details.applied_count` 为 0。批次在隔离图中执行，失败不提交任何编辑，也不产出目标 RP，不返回可继续引用的候选结果。旧 v2 请求不兼容。
+
+`project.export` 与 `library.register` 不允许进入编辑批次。CLI 用外层 `--output` 在成功后发布文件；模板库在批次前通过 `--library-path` 提供。MCP/SDK 成功提交后需重新获取项目句柄，失败时原句柄仍有效。
 
 导入和 batch 默认重新解析输出并生成证据。`--verify` 也可用于其他写入命令。`--evidence-dir DIR` 覆盖证据位置，`--fail-on error|warn|none` 控制门禁，默认 error。失败保留诊断和候选 RP，summary 标记 candidate。
 

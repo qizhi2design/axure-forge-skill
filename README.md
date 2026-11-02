@@ -6,13 +6,13 @@
 
 <p align="center"><b>说一句话，改一个原型。</b></p>
 <p align="center">
-  用日常语言让 AI 助手分析、新建和修改 Axure RP9 原型<br>
+  用日常语言让 AI 助手分析、新建和修改 Axure RP9/RP11 原型<br>
   不记命令，不碰文件格式。
 </p>
 
 <p align="center">
   <img alt="平台：Apple 芯片 Mac" src="https://img.shields.io/badge/platform-Apple%20Silicon-000000?logo=apple&logoColor=white">
-  <img alt="适用于 Axure RP9" src="https://img.shields.io/badge/Axure-RP9-0A7AFF">
+  <img alt="适用于 Axure RP9/RP11" src="https://img.shields.io/badge/Axure-RP9%20%2F%20RP11-0A7AFF">
   <img alt="可与 Claude / Codex 配合" src="https://img.shields.io/badge/works%20with-Claude%20%7C%20Codex-7C3AED">
   <img alt="许可证 MIT" src="https://img.shields.io/badge/license-MIT-22C55E">
 </p>
@@ -53,7 +53,7 @@
 ## 使用前准备
 
 - 一台 Apple 芯片的 Mac（M 系列芯片）。
-- 电脑上已经装好 Axure RP9。
+- 安装和生成不要求已安装 Axure；原生视觉验收时使用对应 RP9/RP11 编辑器。
 - 不需要另外安装运行环境，AxureForge 装好就能用。
 
 ## 安装
@@ -87,23 +87,23 @@ npx skills add qizhi2design/axure-forge-skill --skill axure-forge --agent codex 
 | `$axure-forge 将 ./demo.rp 中「提交」改为「确认提交」，另存为 ./edited.rp` | 找到文字所在位置，改完另存，原文件不动。 |
 | `$axure-forge 创建两个状态的面板，并为按钮添加切换交互` | 新建两状态面板，把按钮接上「点击切换状态」。 |
 
-第一次使用会先检查 RP9，再准备需要的程序。已经装过且版本合适的会直接复用。
+第一次使用会嗅探 RP9/RP11 环境并检查 v3 能力，再准备需要的程序。已经装过且版本合适的会直接复用。
 
 ## 可选设置
 
-- Axure 没装在默认位置（默认是「应用程序」文件夹里的 Axure RP 9）：直接告诉它你的安装路径。
+- Axure 没装在默认位置（自动嗅探「应用程序」中的 RP9/RP11）：直接告诉它你的安装路径。
 - 想装到别的位置：默认装在 `~/.local/bin`，也可以指定别的目录。
 - 升级或覆盖：想换新版本时明确说明；不说明时继续用已经装好的。
 - 离线安装：手上有安装包和校验文件（用来确认下载完整）时，可以从本地装。
 
-更多安装选项见 skill 内的安装说明。
+当前 skill 要求协议 v3；历史同版本号的旧二进制不一定兼容。更多安装选项见 [安装说明](skills/axure-forge/references/installation.md)。
 
 ## 常见问题
 
 <details>
 <summary><b>装好了，但 AI 助手里没反应？</b></summary>
 
-先确认是用 `$axure-forge` 唤起它的。第一次运行会先检查 RP9 和需要的程序，稍等一下。
+先确认是用 `$axure-forge` 唤起它的。第一次运行会嗅探编辑器环境并检查需要的程序，稍等一下。
 
 </details>
 
@@ -124,14 +124,14 @@ npx skills add qizhi2design/axure-forge-skill --skill axure-forge --agent codex 
 <details>
 <summary><b>Axure 没装在默认位置怎么办？</b></summary>
 
-直接告诉它你的安装路径。默认位置是「应用程序」文件夹里的 Axure RP 9。
+直接告诉它你的安装路径。自动嗅探「应用程序」中的 RP9/RP11，也支持指定自定义位置。
 
 </details>
 
 <details>
 <summary><b>能处理 Axure RP11 的文件吗？</b></summary>
 
-只能查看。不会自动转成 RP9，也不会被修改。
+可以读取、编辑和保存 RP11，也支持预检后严格转换；已有文件默认保持源格式。
 
 </details>
 
@@ -144,7 +144,7 @@ npx skills add qizhi2design/axure-forge-skill --skill axure-forge --agent codex 
 
 ## 使用提醒
 
-- Axure RP11 的文件只能查看。不会自动转成 RP9，也不会被修改。
+- Axure RP11 的文件可以读取、编辑和保存 RP11，也支持预检后严格转换；已有文件默认保持源格式。
 - 修改默认另存为新文件，不会覆盖你的原文件。要覆盖必须你明确要求。
 - 自动检查只验证文件结构和属性。交互效果请在 Axure 里实际预览确认。
 - 网页转原型不是 100% 还原。浏览器里的脚本和复杂排版可能对不上，转完要自己过一遍。

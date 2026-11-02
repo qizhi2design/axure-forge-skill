@@ -1,37 +1,36 @@
-# 安装
+# 安装与环境嗅探
 
-只支持 Apple 芯片的 Mac（M 系列芯片），并且必须安装 Axure RP9。安装和使用都不需要另外准备运行环境；只有用 npx 安装这个 skill 时才需要 Node/npm。
+运行平台为 Apple 芯片 Mac。安装 CLI、生成和结构验证不要求已安装 Axure，也不绑定 RP9；需要原生视觉验收时才使用对应编辑器。不需要额外 Python 运行时。
 
 ```bash
-bash /ABS/SKILL/scripts/doctor.sh --rp9-only
+bash /ABS/SKILL/scripts/doctor.sh --app-only
 bash /ABS/SKILL/scripts/install.sh --version v0.3.0
-# 非标准应用路径：以上命令添加 --axure-path '/Applications/Custom Axure.app'
+bash /ABS/SKILL/scripts/doctor.sh
 ```
 
-安装器会从公开仓库 `https://github.com/qizhi2design/axureforge-cli/releases/download/v0.3.0/` 下载 `axure-forge-0.3.0-macos-arm64.tar.gz` 和 `SHA256SUMS`，检查文件是否完整、架构和版本是否正确、命令能不能用、能否新建并重新打开文件，然后替换 `~/.local/bin/axure-forge`。
+安装器从公开仓库 [axureforge-cli](https://github.com/qizhi2design/axureforge-cli/releases) 下载目录包与校验文件，完整校验、检查协议 v3 和双版本能力、分别创建并重新解析 RP9/RP11 后，原子切换命令入口。失败保留旧安装；无需登录 GitHub，不改用源码构建。
 
-默认用 curl 匿名下载，不需要登录 GitHub。版本还没发布时会直接报下载失败，不会改用源码构建。
+版本号不能代表协议兼容：历史 `0.3.0` 可能仍是 v2。以 doctor 能力检查为准；没有兼容发布包时说明限制，不循环重装同一个旧包。本次源码适配不代表已发布新二进制。
 
-校验和只能说明下载内容一致，不代表已经签名或通过系统安全审核。
+## 生成格式选择
 
-目录包必须整体安装，不能只复制可执行文件。安装器在版本目录完整校验后切换命令入口，失败时保留旧安装。
+`doctor.sh` 输出 `available_format_versions` 和 `default_format_version`。自动检查应用元数据；仅 RP11 时默认 11，其余情况默认 9。两版均在且交付对象不明确时可询问一次，建议 RP9；用户指定和项目已确认约定优先。
 
-离线安装（使用包目录相对路径的逐文件校验清单）：
+- `--axure-path APP`：嗅探非标准位置或改名的 RP9/RP11。
+- `--format-version 9|11`：覆盖本次检查的建议值，允许选择未安装编辑器的格式；生成命令仍须显式传入该值。
+- `--app-only`：只报告环境，缺少编辑器不会阻止安装；显式给出的错误路径会报错。
+- `AXURE_APPLICATIONS_DIR`：替换默认 `/Applications` 检查目录。
+
+将选定格式及来源写入项目的 `design-brief.md`，在当前任务复用。已有文件按源格式编辑；新建默认值不用于自动转换。未安装编辑器时，原生视觉和交互状态保持未验证。
+
+## 安装参数
 
 ```bash
-bash /ABS/SKILL/scripts/install.sh \
-  --package-dir /downloads/axure-forge-0.3.0-macos-arm64 \
-  --checksum-path /downloads/PACKAGE-SHA256SUMS
+bash /ABS/SKILL/scripts/install.sh   --package-dir /downloads/axure-forge-0.3.0-macos-arm64   --checksum-path /downloads/PACKAGE-SHA256SUMS
 ```
 
-安装参数：`--version v0.3.N`（默认 v0.3.0，最低 0.3.0）、`--axure-path APP`、`--bin-dir DIR`（默认 ~/.local/bin）、`--package-dir DIR` + `--checksum-path FILE`（旧单文件也支持 `--binary-path FILE`）、`--download-method curl|gh|auto`（默认 curl）、`--force`（替换现有命令）。已有目标版本直接复用；升级要明确传 `--force`。所有脚本都支持 `--help`。
+目录包必须整体安装。参数包括 `--version vX.Y.Z`（默认 v0.3.0）、`--bin-dir DIR`（默认 `~/.local/bin`）、`--axure-path APP`、`--format-version 9|11`、`--package-dir DIR` + `--checksum-path FILE`、`--download-method curl|gh|auto` 和 `--force`。默认匿名 curl 下载；已有安装只有能力兼容时才能复用，更换版本明确传 `--force`。
 
-`doctor.sh` 接受 `--axure-path`、`--binary-path`、`--rp9-only`，输出 key=value；失败时退出 1。
+`doctor.sh` 还接受 `--binary-path CLI`，以 JSON 能力声明检查 v3、原子批次、双版本读写及生成版本参数。`inspect-rp.sh --project FILE` 是可选文件头检查，接受 RP9/RP11，不能代替 `dump --project FILE` 完整解析；普通任务不额外运行它。
 
-`inspect-rp.sh --project FILE [--axure-path APP]` 只输出文件头信息的 JSON。不是 RP9 就退出 1，必须再用 AxureForge 完整打开一次，确认文件没损坏。
-
-如果命令找不到，说明安装目录不在 PATH 里：把 `export PATH="$HOME/.local/bin:$PATH"` 加到 shell 配置，或者直接用安装器打印的完整路径。
-
-启动失败时，不要编造具体的报错内容。不要自动去掉系统的安全隔离标记，不要绕过系统安全提示，也不要要求 sudo。
-
-这个程序文件没有 Apple 签名和安全审核，必要时请用户到系统设置里手动允许。
+安装目录不在 PATH 时，使用安装器输出的完整路径，或将 `~/.local/bin` 加到 PATH。不要自动移除系统隔离标记、绕过安全提示或要求 sudo。程序未签名；确有系统阻止时，由用户在系统设置中允许。

@@ -1,4 +1,4 @@
 interface:
   display_name: "AxureForge"
-  short_description: "先明确画布与页面范围，再用自然语言创建、查找和修改 Axure RP9 原型"
-  default_prompt: "使用 $axure-forge 创建或编辑 RP9 原型；新建时先与我确认页面范围、画布宽高和长页延展方式，已有明确约定则直接沿用。"
+  short_description: "先明确画布与页面范围，再用自然语言创建、查找和修改 Axure RP9/RP11 原型"
+  default_prompt: "使用 $axure-forge 创建或编辑 RP9/RP11 原型；先嗅探环境选择新建格式，用户指定优先，默认 RP9，只有 RP11 时默认 RP11；编辑已有文件保持源格式。新建时先与我确认页面范围、画布宽高和长页延展方式，已有明确约定则直接沿用。"

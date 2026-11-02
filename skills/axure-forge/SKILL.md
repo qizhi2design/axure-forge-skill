@@ -1,11 +1,11 @@
 ---
 name: axure-forge
-description: 设计、创建和编辑 Axure RP9 原型，先明确页面范围与画布宽高，再完成 HTML 转 RP、元件检索、交互和批量修改；也适用于 RP9 环境检查和 CLI 安装。适用于 Apple 芯片 Mac，需本机安装 Axure RP9。
+description: 设计、创建和编辑 Axure RP9/RP11 原型，先明确页面范围与画布宽高，再完成 HTML 转 RP、元件检索、交互和批量修改；也适用于环境嗅探、格式选择、严格版本转换和 CLI 安装。适用于 Apple 芯片 Mac；安装和生成文件不要求已安装 Axure 编辑器。
 ---
 
 # AxureForge
 
-用 `axure-forge` 命令操作 RP9。不需要了解文件内部结构，用命令就能完成日常工作。
+用 `axure-forge` 命令操作 RP9/RP11。不需要了解文件内部结构，用命令就能完成日常工作。
 以下相对路径都以本 skill 目录为基准；实际执行时换成绝对路径。
 
 ## 创作前先约定画布
@@ -19,9 +19,11 @@ description: 设计、创建和编辑 Axure RP9 原型，先明确页面范围�
 
 ## 启动与数据复用
 
-- 同一任务运行一次 `bash scripts/doctor.sh`；环境或二进制变化后才重查。非标准路径加 `--axure-path APP`。
+- 同一任务运行一次 `bash scripts/doctor.sh`，读取 `available_format_versions`、`default_format_version` 和 `protocol_version`；环境或二进制变化后才重查。非标准应用路径加 `--axure-path APP`。
+- 安装不强制绑定 RP9，也不要求已安装编辑器。新建版本优先级：用户明确指定 → 本项目已确认约定 → 环境嗅探。仅 RP11 可用时默认 11；仅 RP9、两者都有或都未安装时默认 9。两者都有且交付对象不明确时可询问一次，建议 RP9；没有必要时说明采用默认值后继续，不增加强制确认。
+- 将选择及来源记入 `design-brief.md`，新建项目与 HTML 导入显式传 `--format-version 9|11`。已有输入保持源格式，不能套用新建默认值改版本；转换必须是用户要求的独立操作。没有编辑器仍可生成与结构验证，视觉/交互验收报告未执行。
 - 缺少兼容 CLI 时读 [安装说明](references/installation.md)，安装发布的目录包；不要安装 Python 或克隆源码构建。
-- 有 RP 输入时直接 `dump --project FILE` 完整解析并生成索引，替代“检查文件头 → project open → page list → page get”的多次往返。非 RP9 不编辑。
+- 有 RP 输入时直接 `dump --project FILE` 完整解析并生成索引，替代“检查文件头 → project open → page list → page get”的多次往返。RP9/RP11 均可编辑，其他版本拒绝；默认不转换。
 - 默认工作目录是当前目录的 `.forge/`，可传 `--work-dir DIR`。先读 `summary.json`；只针对异常读取 report 或索引，不把完整节点数据载入对话。
 
 ## 按任务加载
@@ -36,10 +38,12 @@ description: 设计、创建和编辑 Axure RP9 原型，先明确页面范围�
 
 ## 执行约束
 
-- 以 `capabilities --json` 中命令参数声明为准；一般不必反复 `--help`。输出协议为 2，单操作读取 `result`，批量读取 `results`。
+- 以 `capabilities --json` 中命令参数声明为准；一般不必反复 `--help`。输出协议为 3；先判断 `ok`，单操作读取 `result`，批量读取 `result.results`，失败读取 `error.code/message/details`。旧 v2 请求明确拒绝；CLI 版本号相同也不能代替能力检查。
 - HTML 使用一次 `html import`，由 CLI 自动计算布局、写 RP、重新解析并产出计划/索引/报告。不要手算容器宽高、反复试导入或重复探测已有能力。
 - 编辑先 dump 一次，再用本地 JSONL 定位真实 `scope_id`/`node_id`。一次 batch 尽量完成修改，并通过 `--index` 做写前新鲜度校验。创建出的 ID 使用批量结果引用。
+- batch 原子提交：失败时 `error.details.applied_count` 为 0，不保留中间编辑；不要从失败批次继续引用结果。`project.export` 和 `library.register` 不放入编辑批次；文件输出使用 CLI 的 `--output`。
 - 计划自动缓存；显式 `--plan FILE` 失效时重新生成，不能绕过哈希检查。索引只读，不能手改后用于写入。
+- RP9/RP11 转换先 `project check-conversion`，再 `project convert` 另存；未知字段或未验证能力阻断时读取报告，不能用改文件头、删未知字段或原始对象写入来绕过。
 - 输出默认另存新路径，已存在则换迭代文件名；只有用户明确要求覆盖才用 `--force`。
 - 画布与页面范围按创作前约定确认一次；同一问题不重复确认，仅业务含义或高成本分叉仍不明确时再提问。用户询问进度时引用已有证据，不重跑截图。
 - 结构、布局估算、视觉、交互分别汇报。CLI 自动检查不代表 Axure 视觉或交互实测；普通转换不打开 GUI，需要视觉验收时在交付检查点集中检查。

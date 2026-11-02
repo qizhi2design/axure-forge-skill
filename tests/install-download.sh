@@ -4,6 +4,7 @@ ROOT=$(cd "$(dirname "$0")/.." && pwd)
 binary=${1:?Usage: tests/install-download.sh BINARY}
 tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT
+export AXURE_APPLICATIONS_DIR="$tmp/no-editors"
 mkdir -p "$tmp/assets" "$tmp/tools"
 mkdir -p "$tmp/assets/axure-forge-0.3.0-macos-arm64"
 cp -RL "$(dirname "$binary")/." "$tmp/assets/axure-forge-0.3.0-macos-arm64/"
@@ -43,6 +44,6 @@ printf '#!/bin/bash\nprintf "Linux\\n"\n' > "$tmp/tools/uname".mock
 chmod +x "$tmp/tools/uname.mock"
 rm "$tmp/tools/uname"
 mv "$tmp/tools/uname.mock" "$tmp/tools/uname"
-if PATH="$tmp/tools" /bin/bash "$ROOT/skills/axure-forge/scripts/doctor.sh" --rp9-only > "$tmp/failure.log" 2>&1; then exit 1; fi
+if PATH="$tmp/tools" /bin/bash "$ROOT/skills/axure-forge/scripts/doctor.sh" --app-only > "$tmp/failure.log" 2>&1; then exit 1; fi
 grep -q 'macOS only' "$tmp/failure.log"
 printf 'PASS: simulated Release download, archive validation, preservation, platform rejection, runtime-free installer PATH\n'

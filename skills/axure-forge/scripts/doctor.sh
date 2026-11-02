@@ -2,31 +2,42 @@
 set -euo pipefail
 SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
 source "$SCRIPT_DIR/common.sh"
-app='/Applications/Axure RP 9.app'
-binary=''
-rp9_only=0
+app=''; binary=''; preferred=''; app_only=0
 while [ "$#" -gt 0 ]; do
   case "$1" in
     --axure-path) need_value "$@"; app=$2; shift 2 ;;
     --binary-path) need_value "$@"; binary=$2; shift 2 ;;
-    --rp9-only) rp9_only=1; shift ;;
-    --help|-h) printf '%s\n' 'Usage: doctor.sh [--axure-path APP] [--binary-path CLI] [--rp9-only]'; exit 0 ;;
+    --format-version) need_value "$@"; preferred=$2; shift 2 ;;
+    --app-only) app_only=1; shift ;;
+    --help|-h) printf '%s\n' 'Usage: doctor.sh [--axure-path APP] [--binary-path CLI] [--format-version 9|11] [--app-only]' 'Editors are optional. Only RP11 detected: default 11; otherwise default 9. Explicit format wins.'; exit 0 ;;
     *) fail "unknown option: $1" ;;
   esac
 done
 require_platform
-check_rp9 "$app"
-[ "$rp9_only" -eq 0 ] || exit 0
+detect_environment "$app" "$preferred"
+[ "$app_only" -eq 0 ] || exit 0
 if [ -z "$binary" ]; then
   binary=$(command -v axure-forge || true)
   if [ -z "$binary" ] && [ -x "$HOME/.local/bin/axure-forge" ]; then binary="$HOME/.local/bin/axure-forge"; fi
 fi
 [ -n "$binary" ] && [ -x "$binary" ] || fail 'CLI missing; run install.sh'
-capabilities=$("$binary" capabilities --json) || fail 'CLI capabilities unavailable; install v0.3.0 explicitly'
-version=$(printf '%s' "$capabilities" | sed -n 's/.*"version": "\([0-9][0-9.]*\)".*/\1/p')
-[[ "$version" =~ ^0\.3\.[0-9]+$ ]] || fail "unsupported CLI version: $version; expected 0.3.x"
-for command in 'html.plan' 'html.import' 'dump' 'verify' 'batch'; do
-  case "$capabilities" in *\""$command"\"*) ;; *) fail "CLI lacks $command" ;; esac
+capabilities=$("$binary" capabilities --json) || fail 'CLI capabilities unavailable; install a protocol-v3 build'
+[ "$(json_value "$capabilities" schema_version)" = 3 ] && [ "$(json_value "$capabilities" ok)" = true ] || fail 'CLI must return a successful protocol-v3 envelope; old v2 builds are incompatible'
+[ "$(json_value "$capabilities" result.protocol_version)" = 3 ] || fail 'CLI lacks protocol v3'
+[ "$(json_value "$capabilities" result.batch.atomic)" = true ] && [ "$(json_value "$capabilities" result.batch.external_writes)" = false ] || fail 'CLI lacks atomic editing batches'
+version=$(json_value "$capabilities" result.version) || fail 'missing CLI version'
+for slot in 0 1; do
+  expected=9; [ "$slot" = 0 ] || expected=11
+  [ "$(json_value "$capabilities" "result.supported_versions.$slot")" = "$expected" ] || fail 'CLI must support RP9 and RP11'
+  [ "$(json_value "$capabilities" "result.formats.$slot.version")" = "$expected" ] || fail 'invalid format capability declaration'
+  for ability in read edit write; do
+    [ "$(json_value "$capabilities" "result.formats.$slot.$ability")" = true ] || fail "CLI lacks RP$expected $ability"
+  done
 done
-printf 'cli_path=%s\ncli_version=%s\n' "$binary" "$version"
+for command in 'html import' 'html plan' 'dump' 'verify' 'batch' 'project check-conversion' 'project convert'; do
+  printf '%s' "$capabilities" | /usr/bin/plutil -extract "result.cli.$command" json -o - - >/dev/null 2>&1 || fail "CLI lacks $command"
+done
+html_cli=$(printf '%s' "$capabilities" | /usr/bin/plutil -extract 'result.cli.html import' json -o - -)
+case "$html_cli" in *'"--format-version"'*) ;; *) fail 'CLI HTML import lacks explicit format selection' ;; esac
+printf 'cli_path=%s\ncli_version=%s\nprotocol_version=3\n' "$binary" "$version"
 if ! command -v axure-forge >/dev/null; then printf 'PATH: add %s to PATH\n' "$(dirname "$binary")" >&2; fi

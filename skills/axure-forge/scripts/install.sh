@@ -2,7 +2,7 @@
 set -euo pipefail
 SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
 source "$SCRIPT_DIR/common.sh"
-app='/Applications/Axure RP 9.app'
+app=''; preferred=''
 version=v0.3.0
 binary=''; checksum=''; package_dir=''
 bin_dir="$HOME/.local/bin"
@@ -10,6 +10,7 @@ force=0; download_method=curl
 while [ "$#" -gt 0 ]; do
   case "$1" in
     --axure-path) need_value "$@"; app=$2; shift 2 ;;
+    --format-version) need_value "$@"; preferred=$2; shift 2 ;;
     --version) need_value "$@"; version=$2; shift 2 ;;
     --binary-path) need_value "$@"; binary=$2; shift 2 ;;
     --package-dir) need_value "$@"; package_dir=$2; shift 2 ;;
@@ -17,19 +18,22 @@ while [ "$#" -gt 0 ]; do
     --bin-dir) need_value "$@"; bin_dir=$2; shift 2 ;;
     --force) force=1; shift ;;
     --download-method) need_value "$@"; download_method=$2; shift 2 ;;
-    --help|-h) printf '%s\n' 'Usage: install.sh [--version v0.3.0] [--axure-path APP] [--bin-dir DIR] [--force]' 'Online: --download-method curl|gh|auto' 'Offline: --package-dir DIR --checksum-path SHA256SUMS (whole directory, relative file paths)' 'Legacy single-file offline: --binary-path FILE --checksum-path SHA256SUMS'; exit 0 ;;
+    --help|-h) printf '%s\n' 'Usage: install.sh [--version v0.3.0] [--axure-path APP] [--bin-dir DIR] [--format-version 9|11] [--force]' 'Online: --download-method curl|gh|auto' 'Offline: --package-dir DIR --checksum-path SHA256SUMS (whole directory, relative file paths)' 'Legacy single-file offline: --binary-path FILE --checksum-path SHA256SUMS'; exit 0 ;;
     *) fail "unknown option: $1" ;;
   esac
 done
 require_platform
-check_rp9 "$app"
-[[ "$version" =~ ^v0\.3\.[0-9]+$ ]] || fail 'supported release tags: v0.3.N'
+detect_environment "$app" "$preferred"
+[[ "$version" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] || fail 'supported release tags: vX.Y.Z'
 case "$download_method" in auto|gh|curl) ;; *) fail 'download method must be auto, gh or curl' ;; esac
 [ -z "$binary" ] || [ -z "$package_dir" ] || fail 'choose package-dir or binary-path'
 if [ -e "$bin_dir/axure-forge" ] && [ "$force" -eq 0 ]; then
   installed=$("$bin_dir/axure-forge" --version) || fail 'installed CLI failed; use --force explicitly'
   [ "$installed" = "${version#v}" ] || fail "installed $installed differs from $version; use --force to upgrade"
-  bash "$SCRIPT_DIR/doctor.sh" --axure-path "$app" --binary-path "$bin_dir/axure-forge"
+  doctor_args=(--binary-path "$bin_dir/axure-forge")
+  [ -z "$app" ] || doctor_args+=(--axure-path "$app")
+  [ -z "$preferred" ] || doctor_args+=(--format-version "$preferred")
+  bash "$SCRIPT_DIR/doctor.sh" "${doctor_args[@]}"
   printf 'reused=%s\n' "$bin_dir/axure-forge"
   exit 0
 fi
@@ -94,8 +98,13 @@ fi
 chmod 755 "$tmp/package/axure-forge"
 file "$tmp/package/axure-forge" | /usr/bin/grep -q 'Mach-O.*arm64' || fail 'expected macOS ARM64 executable'
 [ "$("$tmp/package/axure-forge" --version)" = "${version#v}" ] || fail 'binary version differs from requested release'
-bash "$SCRIPT_DIR/doctor.sh" --axure-path "$app" --binary-path "$tmp/package/axure-forge"
-(cd "$tmp" && ./package/axure-forge project create --name 'Installation check' --output check.rp > /dev/null && ./package/axure-forge dump --project check.rp > /dev/null)
+doctor_args=(--binary-path "$tmp/package/axure-forge")
+[ -z "$app" ] || doctor_args+=(--axure-path "$app")
+[ -z "$preferred" ] || doctor_args+=(--format-version "$preferred")
+bash "$SCRIPT_DIR/doctor.sh" "${doctor_args[@]}"
+for format in 9 11; do
+  (cd "$tmp" && ./package/axure-forge project create --name 'Installation check' --format-version "$format" --output "check$format.rp" > /dev/null && ./package/axure-forge dump --project "check$format.rp" > /dev/null)
+done
 mkdir -p "$bin_dir/.axure-forge"
 staged=$(mktemp -d "$bin_dir/.axure-forge/${version#v}.XXXXXX")
 cp -R "$tmp/package/." "$staged/"

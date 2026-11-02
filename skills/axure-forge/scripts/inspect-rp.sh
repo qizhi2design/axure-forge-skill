@@ -2,7 +2,7 @@
 set -euo pipefail
 SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
 source "$SCRIPT_DIR/common.sh"
-app='/Applications/Axure RP 9.app'
+app=''
 project=''
 while [ "$#" -gt 0 ]; do
   case "$1" in
@@ -13,12 +13,12 @@ while [ "$#" -gt 0 ]; do
   esac
 done
 require_platform
-check_rp9 "$app" >&2
+[ -z "$app" ] || check_axure "$app" >&2
 [ -n "$project" ] && [ -f "$project" ] || fail '--project must name an existing file'
 # Explicit bytes avoid host-endian assumptions. This is a format gate, not a full parser.
 read -r b1 b2 b3 b4 < <(od -An -tu1 -N4 "$project") || fail 'truncated RP header'
 [ "${b1:-}" = 172 ] && [ "${b2:-}" = 239 ] || fail 'invalid RP signature'
 [ -n "${b3:-}" ] && [ -n "${b4:-}" ] || fail 'truncated RP header'
 version=$((b3 + b4 * 256))
-printf '{"format_version":%d,"is_rp9":%s,"validation":"header_only"}\n' "$version" "$([ "$version" -eq 9 ] && printf true || printf false)"
-[ "$version" -eq 9 ] || fail "RP$version is not supported for editing; no automatic conversion"
+case "$version" in 9|11) ;; *) fail "RP$version is not supported; no automatic conversion" ;; esac
+printf '{"format_version":%d,"supported":true,"validation":"header_only"}\n' "$version"
