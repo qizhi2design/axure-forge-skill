@@ -36,10 +36,15 @@ description: 设计、创建和编辑 Axure RP9/RP11 原型，先明确页面范
 
 ## 按任务加载
 
+运行中的 SPA、宿主浏览器或复杂控件还原：先读[SPA 语义预处理](references/spa-semantic.md)，涉及树形下拉、菜单、Tab、表格或日历时再读[控件映射决策](references/component-mapping.md)。优先可编辑原生控件及组合，不把整块交互区域作为图片兜底。
+
+复合控件使用公开 components 配置与稳定业务键，按触发器、弹层、内容、装饰声明归属。默认保真；用户指定简化的组件才设 appearance:plain。检查自动生成的 component-report，缺失数据与未实测交互明确报告。
+
 当前任务相关参考说明只需读一次：
 
 - 新建页面需要起点时：[HTML 模板](references/html-templates.md)，只读取与任务匹配的一份模板。
 - HTML 转换：[项目与 HTML](references/project-and-html.md)。
+- React/Vue 等 SPA、减少 DOM 噪声、原生控件优先或日常 Chrome/Edge 已登录标签页还原：[SPA 语义预处理](references/spa-semantic.md)。先检查当前 CLI 是否提供 web 命令与所需参数。
 - 定位和编辑：[检索与编辑](references/search-and-edit.md)。
 - 交互：[交互](references/interactions.md)。
 - 批量与证据：[批量与验证](references/batch-and-verify.md)。
