@@ -44,4 +44,11 @@ grep -q 'protocol-v3' "$tmp/old.log"
 # Real v3 build is accepted without any editor installed.
 bash "$S/doctor.sh" --binary-path "$binary" > "$tmp/v3.log"
 grep -q '^protocol_version=3$' "$tmp/v3.log"
+# A protocol-v3 CLI with legacy command spellings is no longer compatible.
+"$binary" capabilities --json > "$tmp/current.json"
+node -e 'const fs=require("fs"); const p=JSON.parse(fs.readFileSync(process.argv[1])); delete p.result.cli["master-instance get"]; fs.writeFileSync(process.argv[2], JSON.stringify(p));' "$tmp/current.json" "$tmp/legacy.json"
+printf '#!/bin/bash\ncat %q\n' "$tmp/legacy.json" > "$tmp/legacy-cli"
+chmod +x "$tmp/legacy-cli"
+if bash "$S/doctor.sh" --binary-path "$tmp/legacy-cli" > "$tmp/legacy.log" 2>&1; then exit 1; fi
+grep -q 'CLI lacks master-instance get' "$tmp/legacy.log"
 printf 'PASS: no editor, RP9 only, RP11 only, both, explicit selection, renamed app, v2 rejection and editor-free v3 checks\n'

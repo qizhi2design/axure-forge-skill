@@ -26,7 +26,7 @@ bash /ABS/SKILL/scripts/doctor.sh
 ## 安装参数
 
 ```bash
-bash /ABS/SKILL/scripts/install.sh   --package-dir /downloads/axure-forge-0.4.0-macos-arm64   --checksum-path /downloads/PACKAGE-SHA256SUMS
+bash /ABS/SKILL/scripts/install.sh   --package-dir /downloads/axure-forge-0.5.0-macos-arm64   --checksum-path /downloads/PACKAGE-SHA256SUMS
 ```
 
 目录包必须整体安装。参数包括 `--version vX.Y.Z`（默认选择与当前 skill 兼容的最新正式版；已有兼容安装直接复用）、`--bin-dir DIR`（默认 `~/.local/bin`）、`--axure-path APP`、`--format-version 9|11`、`--package-dir DIR` + `--checksum-path FILE`、`--download-method curl|gh|auto` 和 `--force`。默认匿名 curl 下载；已有安装只有能力兼容时才能复用，更换版本明确传 `--force`。
@@ -42,7 +42,7 @@ bash /ABS/SKILL/scripts/install.sh   --package-dir /downloads/axure-forge-0.4.0-
 axure-forge update check --path /ABS/SKILL
 axure-forge update all --path /ABS/SKILL --dry-run
 axure-forge update all --path /ABS/SKILL --yes
-axure-forge update cli --version 0.4.0 --yes
+axure-forge update cli --version 0.5.0 --yes
 axure-forge config set sources.cli.repo qizhi2design/axureforge-cli
 axure-forge config set sources.skill.repo qizhi2design/axure-forge-skill
 axure-forge config set sources.cli.mirror-prefix https://mirror.example/
@@ -60,3 +60,7 @@ CLI 与 skill 独立版本管理，选择正式 Release 并校验协议和能力
 首次安装时若断网，脚本正常结束并说明需要联网或离线包；已有兼容安装优先复用且不联网。调用方应通过 `doctor.sh` 或命令路径确认是否确实装好，不能只凭安装脚本退出码判断。校验失败、非法参数和权限问题仍作为真实错误报告。
 
 pip / uv tool / 源码安装由 CLI 提供原安装方式的升级指引；二进制更新保留完整目录，失败恢复原入口。Windows 的二进制更新使用独立进程，先返回 `submitted`，当前进程退出后完成；随后执行 `update check` 查看最终结果。skill 本身目前仍仅支持 Apple 芯片 Mac。
+
+## CLI 0.5.0 命令迁移
+
+本版 skill 最低要求 CLI 0.5.0。CLI 分组统一为连字符，旧下划线拼写不再接受，完整长参数不支持缩写。帮助与错误提示为英文；`--debug` 只向 stderr 输出诊断堆栈，stdout 保持 JSON。内部 batch 操作名称仍使用下划线。doctor 会检查新的命令入口，不能复用缺少这些能力的旧 CLI。

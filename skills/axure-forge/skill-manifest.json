@@ -1,15 +1,15 @@
 {
   "manifest_version": 1,
   "name": "axure-forge",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "protocol_version": 3,
-  "cli_min_version": "0.4.0",
+  "cli_min_version": "0.5.0",
   "cli_max_version": null,
   "platforms": [
     "macos-arm64"
   ],
   "files": {
-    "SKILL.md": "0e5ea5d1491007257d291c611298fcaafb89cd97d5cef21ff07e42525f113061",
+    "SKILL.md": "7b3e924fbe14f734baf4ceaddad741c0b35c0e4d9259323a8a246c893e3e6215",
     "agents/openai.yaml": "4026dcf6ddb75d7c2379b373ca0021ac55aa841854cb2e676b9f1acadb6d15d6",
     "assets/html-templates/desktop-dashboard.html": "8c630712b0ef4f9564ebbb8f1bdf993550ed65f6ab6b1e9735ec75f1674286e4",
     "assets/html-templates/desktop-list-form.html": "77c0a9466efbbc7f846d558b4fe0b0f04b78a5214126549b1ec8b5e784a73afe",
@@ -19,13 +19,13 @@
     "references/component-mapping.md": "bea1052aca1245a3a7430e7800f663289a68cf44963a3ee9ef30552265696735",
     "references/host-capture.md": "c4228068c327f406df05eba1aff84e485983c536006be1b77d08fda2e35e0afb",
     "references/html-templates.md": "59fd7e0ded1cefbe9a88bc1eeee4eb0078e1429baae669ff955ededb26dca6f2",
-    "references/installation.md": "9f9a12d6693f6a73bf8fa1ee5e1914ebb006a17637ac3b4a8be927763c85ca7a",
+    "references/installation.md": "817c86e88b668c3911df7cb001c13872bb2fa8aeda7401964d61e5abdb5f7387",
     "references/interactions.md": "02aecadaa5939b9201f7e4186c04d1b92d270a0178f7b1c3c2d1187a97d4fe28",
     "references/project-and-html.md": "ce8ee11eba572a6b28d73d4ea0ee903d810ba85b43f58032a9cbf53156fee8f9",
-    "references/search-and-edit.md": "96a605ab19fa75ef3ae29c39923eab395a8cea3caa93eb5da09e0fee9b5ffe09",
+    "references/search-and-edit.md": "a23987c7c35fe45fbb633d98a8b707ebc7544e40abdb1ef783f3dd1cbe7f140a",
     "references/spa-semantic.md": "a5ada32c3d3acfd5fb835b5c74421cde16951169bd8d49ed475fccfe555e8828",
     "scripts/common.sh": "ea654cc0a49c05e8c5e8a27e224fb892141c4215a08ad7a8720de2cbdddaf0c5",
-    "scripts/doctor.sh": "3954f91868cbc1e923e6334fc439ebc987d5a63c77f07a89e7b6e96fa4de04e6",
+    "scripts/doctor.sh": "9dc13abe406d3767f1153f8c2ee9f02a0dce9057057ef82a7e973bce0cda0f99",
     "scripts/inspect-rp.sh": "ee329493d6d95fbef7ca4279e8024208f795026861b2a536a9240008157f79c5",
     "scripts/install.sh": "989a847333ada190273d1e66278742e23884390b56e7d2544114c41d1432fb21"
   }

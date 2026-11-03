@@ -35,7 +35,7 @@ for slot in 0 1; do
     [ "$(json_value "$capabilities" "result.formats.$slot.$ability")" = true ] || fail "CLI lacks RP$expected $ability"
   done
 done
-for command in 'html import' 'html plan' 'dump' 'verify' 'batch' 'project check-conversion' 'project convert'; do
+for command in 'html import' 'html plan' 'dump' 'verify' 'batch' 'project check-conversion' 'project convert' 'adaptive-view list' 'adaptive-view-set list' 'interaction-style get' 'master-folder get' 'master-instance get' 'master-tree get' 'page-tree get' 'web prepare' 'web capture' 'web plan' 'web import'; do
   printf '%s' "$capabilities" | /usr/bin/plutil -extract "result.cli.$command" json -o - - >/dev/null 2>&1 || fail "CLI lacks $command"
 done
 html_cli=$(printf '%s' "$capabilities" | /usr/bin/plutil -extract 'result.cli.html import' json -o - -)

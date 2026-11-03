@@ -61,7 +61,7 @@ The whole flow takes four steps. It handles everything in between.
 - Only native visual acceptance needs the matching RP9/RP11 editor open.
 - No separate runtime is needed; once installed, it works.
 
-Current skill version 0.4.0, protocol v3, requires CLI 0.4.0 or later.
+Current skill version 0.5.0, protocol v3, requires CLI 0.5.0 or later.
 
 ## Install
 

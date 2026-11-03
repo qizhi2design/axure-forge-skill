@@ -49,6 +49,13 @@ description: 设计、创建和编辑 Axure RP9/RP11 原型，先明确页面范
 - 交互：[交互](references/interactions.md)。
 - 批量与证据：[批量与验证](references/batch-and-verify.md)。
 
+## CLI 展示与诊断
+
+- 本版要求 CLI 0.5.0 及以上。直接运行 `axure-forge` 显示版本与分组帮助；`--version` 仅输出版本号。帮助与 CLI 提示为英文，用户内容保持原样。
+- CLI 命令与长参数使用完整的小写连字符拼写，例如 `adaptive-view`、`adaptive-view-set`、`interaction-style`、`master-folder`、`master-instance`、`master-tree`、`page-tree`。旧下划线命令和长参数缩写已移除；batch JSON 的 `master_instance.create` 等内部操作名及参数字段保持原样。
+- 失败时先读 stdout 的单个 JSON 错误和 stderr 的简短提示；默认不显示 Python 堆栈。普通错误按提示修正，不循环重试。遇到未预期错误时，可在确认原操作输出与副作用后加 `--debug` 诊断；它只向 stderr 增加堆栈，不改变 JSON。
+- 退出码 `0` 成功、`1` 执行或校验失败、`2` 参数或输入错误、`130` 用户取消。无参数或纯命令分组显示帮助且退出 `0`；不以退出码 `0` 单独推断已生成 RP，仍检查响应及输出文件。
+
 ## 执行约束
 
 - 以 `capabilities --json` 中命令参数声明为准；一般不必反复 `--help`。输出协议为 3；先判断 `ok`，单操作读取 `result`，批量读取 `result.results`，失败读取 `error.code/message/details`。旧 v2 请求明确拒绝；CLI 版本号相同也不能代替能力检查。

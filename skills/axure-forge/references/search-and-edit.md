@@ -30,4 +30,4 @@ axure-forge node delete --project with-button.rp --scope-id SCOPE --node-id NODE
 
 重新打开输出文件，再搜一次、读一次目标，核对文字、类型和必要属性。
 
-其他类别（`table`、`tree`、`menu`、`master`、`adaptive_view`、`connector` 等）可以用 `axure-forge --help` 查实际名称，只查当前任务需要的部分。
+其他类别（`table`、`tree`、`menu`、`master`、`adaptive-view`、`connector` 等）可以用 `axure-forge --help` 查实际名称，只查当前任务需要的部分。
