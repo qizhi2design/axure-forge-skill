@@ -88,13 +88,13 @@ Just describe what you need in plain language — no commands to memorize.
 
 | You say | What it does |
 | --- | --- |
-| `$axure-forge 检查 RP9 环境` | Confirms whether the local Axure RP9 can work with it, and says directly what is missing. |
-| `$axure-forge 分析 ./demo.rp 的页面和交互` | Lists the pages, the widgets on each page, and the interactions wired to them. |
-| `$axure-forge 将 ./site 转换为 ./demo.rp` | Reads a web folder into an editable prototype, saved as a new file. |
-| `$axure-forge 将 ./demo.rp 中「提交」改为「确认提交」，另存为 ./edited.rp` | Finds where the text lives, makes the change, and saves as a new file, leaving the original untouched. |
-| `$axure-forge 创建两个状态的面板，并为按钮添加切换交互` | Creates a two-state panel and wires the button to "click to switch state". |
-| `$axure-forge 把 ./demo.rp 转成 RP11，另存为 ./demo-rp11.rp` | Preflights compatibility first, then converts strictly and saves as new; the original is untouched. |
-| `$axure-forge 用桌面看板模板起一个 1440 宽的原型` | Starts from the dashboard template and generates a new prototype on the agreed canvas. |
+| `$axure-forge Check my local RP9 environment` | Checks the CLI and local RP9 setup and reports anything missing. The editor is optional for generation. |
+| `$axure-forge Analyze the pages and interactions in ./demo.rp` | Lists the pages, the widgets on each page, and the interactions wired to them. |
+| `$axure-forge Convert ./site into an editable prototype at ./demo.rp` | Reads a web folder into an editable prototype, saved as a new file. |
+| `$axure-forge Replace "Submit" with "Confirm submit" in ./demo.rp and save as ./edited.rp` | Finds where the text lives, makes the change, and saves as a new file, leaving the original untouched. |
+| `$axure-forge Create a two-state panel and add a button to switch between the states` | Creates a two-state panel and wires the button to "click to switch state". |
+| `$axure-forge Convert ./demo.rp to RP11 and save as ./demo-rp11.rp` | Preflights compatibility first, then converts strictly and saves as new; the original is untouched. |
+| `$axure-forge Start a 1440 px wide prototype from the desktop dashboard template` | Starts from the dashboard template and generates a new prototype on the agreed canvas. |
 
 On first use it sniffs the RP9/RP11 environment and checks protocol v3 capabilities, then prepares the required programs. Anything already installed at a suitable version is reused.
 
@@ -155,7 +155,7 @@ Existing files keep their source format by default and never switch versions qui
 
 `doctor.sh` accepts: `--axure-path`, `--format-version 9|11`, `--app-only`, `--check-updates`.
 
-To check for updates (run from the skill directory):
+To check for updates (run from the repository root):
 
 ```bash
 bash skills/axure-forge/scripts/doctor.sh --check-updates
@@ -163,7 +163,7 @@ bash skills/axure-forge/scripts/doctor.sh --check-updates
 
 If it is installed elsewhere, replace the directory above with the actual skill path.
 
-The CLI's self-update entry point has not shipped yet, so upgrades go through the install script: rerun the install command above.
+Use `axure-forge update all --path /ABS/SKILL --dry-run` to preview the CLI and skill update, then add `--yes` instead of `--dry-run` to apply it. Replace `/ABS/SKILL` with your installed skill directory.
 When it cannot determine a version it says so directly and never claims "already up to date".
 
 More install options: [installation notes (Chinese)](skills/axure-forge/references/installation.md).

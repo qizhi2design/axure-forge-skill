@@ -88,7 +88,7 @@ npx skills add qizhi2design/axure-forge-skill --skill axure-forge --agent codex 
 
 | 你说的话 | 它会做什么 |
 | --- | --- |
-| `$axure-forge 检查 RP9 环境` | 确认本机的 Axure RP9 能不能配合工作，缺什么会直接说。 |
+| `$axure-forge 检查 RP9 环境` | 检查 CLI 和本机 RP9 环境，直接说明缺少的条件；生成文件不要求已安装编辑器。 |
 | `$axure-forge 分析 ./demo.rp 的页面和交互` | 列出有哪些页面、页面上有什么元件、挂了什么交互。 |
 | `$axure-forge 将 ./site 转换为 ./demo.rp` | 把网页文件夹读成可编辑的原型，另存为新文件。 |
 | `$axure-forge 将 ./demo.rp 中「提交」改为「确认提交」，另存为 ./edited.rp` | 找到文字所在位置，改完另存，原文件不动。 |
@@ -155,7 +155,7 @@ CLI 的默认尺寸不算你已确认的尺寸。
 
 `doctor.sh` 支持的参数：`--axure-path`、`--format-version 9|11`、`--app-only`、`--check-updates`。
 
-检查更新请用（在 skill 目录下运行）：
+检查更新请用（在仓库根目录运行）：
 
 ```bash
 bash skills/axure-forge/scripts/doctor.sh --check-updates
@@ -163,7 +163,7 @@ bash skills/axure-forge/scripts/doctor.sh --check-updates
 
 装到别处的话，把前面的目录换成你实际的 skill 所在路径。
 
-CLI 的自更新入口还没随发布版提供，所以升级走安装脚本：重跑上面的安装命令即可。
+使用 `axure-forge update all --path /ABS/SKILL --dry-run` 预览 CLI 和 skill 更新，再将 `--dry-run` 换成 `--yes` 执行。把 `/ABS/SKILL` 替换为实际安装的 skill 目录。
 检查不到版本时会直接说明，不会说成「已是最新」。
 
 更多安装选项见 [安装说明](skills/axure-forge/references/installation.md)。
