@@ -16,8 +16,8 @@
 
 <p align="center">
   <img alt="适用于 Axure RP9/RP11" src="https://img.shields.io/badge/Axure-RP9%20%2F%20RP11-0A7AFF">
-  <img alt="可与 Claude / Codex 配合" src="https://img.shields.io/badge/works%20with-Claude%20%7C%20Codex-7C3AED">
-  <img alt="许可证 MIT" src="https://img.shields.io/badge/license-MIT-22C55E">
+  <img alt="可与 Claude / Codex 配合" src="https://img.shields.io/badge/%E9%85%8D%E5%90%88%E4%BD%BF%E7%94%A8-Claude%20%7C%20Codex-7C3AED">
+  <img alt="许可证 MIT" src="https://img.shields.io/badge/%E8%AE%B8%E5%8F%AF%E8%AF%81-MIT-22C55E">
 </p>
 
 <p align="center">

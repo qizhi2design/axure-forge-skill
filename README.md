@@ -21,10 +21,10 @@
 </p>
 
 <p align="center">
-  <img alt="HTML to prototype" src="https://img.shields.io/badge/HTML%E8%BD%AC%E5%8E%9F%E5%9E%8B-22D3EE?style=flat-square">
-  <img alt="Canvas agreement" src="https://img.shields.io/badge/%E7%94%BB%E5%B8%83%E7%BA%A6%E5%AE%9A-22D3EE?style=flat-square">
-  <img alt="Strict conversion" src="https://img.shields.io/badge/%E4%B8%A5%E6%A0%BC%E8%BD%AC%E6%8D%A2-22D3EE?style=flat-square">
-  <img alt="Batch edits" src="https://img.shields.io/badge/%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9-22D3EE?style=flat-square">
+  <img alt="HTML to prototype" src="https://img.shields.io/badge/HTML%20to%20prototype-22D3EE?style=flat-square">
+  <img alt="Canvas agreement" src="https://img.shields.io/badge/Canvas%20agreement-22D3EE?style=flat-square">
+  <img alt="Strict conversion" src="https://img.shields.io/badge/Strict%20conversion-22D3EE?style=flat-square">
+  <img alt="Batch edits" src="https://img.shields.io/badge/Batch%20edits-22D3EE?style=flat-square">
 </p>
 
 <p align="center">
